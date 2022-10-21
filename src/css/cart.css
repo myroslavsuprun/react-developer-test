@@ -1,0 +1,138 @@
+
+.cart__title {
+    margin-bottom: 54px;
+
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.25;
+
+    text-transform: uppercase;    
+}
+
+.cart__product-list {
+    padding: 24px 0;
+    margin-bottom: 32px;
+
+    border-top: 1px solid #E5E5E5;
+    border-bottom: 1px solid #E5E5E5;
+
+    list-style-type: none;
+}
+
+.cart__product-item {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 26px;
+}
+
+.cart__product-item + .cart__product-item {
+    padding-top: 26px;
+    border-top: 1px solid #E5E5E5;
+}
+
+
+.cart__product-type--margin-bottom {
+    margin-bottom: 20px;
+}
+
+.cart__product-price {
+    margin-bottom: 20px;
+
+    font-weight: 700;
+    font-size: 24px;
+    line-height: .75;
+}
+
+.cart__product-right-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.cart__product-quantity-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 72px;
+}
+
+.cart__quantity-btn {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: transparent;
+    border: 1px solid #1D1F22;
+    cursor: pointer;
+}
+
+.cart__product-img-wrapper {
+    position: relative;
+
+}
+
+.cart__product-img {
+    width: 200px;
+    height: 288px;
+    object-fit: cover;
+}
+
+.cart__product-change-btn-wrapper {
+    position: absolute;
+    bottom: 16;
+    right: 16;
+
+    display: flex;
+    gap: 8;
+}
+
+.cart__img-change-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 5px 8px;
+    width: 24px;
+    height: 24px;
+
+    border: none;
+    background-color: rgba(0, 0, 0, 0.73);
+
+    cursor: pointer;
+}
+
+.cart__count-list {
+    margin-bottom: 16px;
+    
+    display: flex;
+    gap: 10px;
+    
+    font-size: 24px;
+    line-height: 1.17;
+    list-style-type: none;
+}
+
+.cart__count-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart__count-sum {
+    font-weight: 700;
+}
+
+.cart__order-btn {
+    padding: 13px 114px;
+
+    background-color: #5ECE7B;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
