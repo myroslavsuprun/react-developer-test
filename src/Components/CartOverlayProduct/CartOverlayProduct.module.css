@@ -1,0 +1,123 @@
+.cartOverlay__productItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cartOverlay__productItem+.cartOverlay__productItem {
+    margin-top: 40px;
+}
+
+.cartOverlay__leftWrapper {
+    max-width: 164px;
+}
+
+.cartOverlay__productTitle {
+    margin-bottom: 4px;
+
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.cartOverlay__productType {
+    font-weight: 300;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.cartOverlay__productPrice {
+    margin-bottom: 8px;
+
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.cartOverlay__subtitle {
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    line-height: 1.14;
+    text-transform: capitalize;
+}
+
+.cartOverlay__sizeBtnWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+
+    margin-bottom: 8px;
+}
+
+.cartOverlay__sizeBtn {
+    padding: 2px 2px;
+
+    min-width: 24px;
+    min-height: 24px;
+
+    background-color: transparent;
+    border: 1px solid #1D1F22;
+
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    color: #1D1F22;
+
+    cursor: pointer;
+}
+
+.cartOverlay__sizeBtn_active {
+    background-color: #1D1F22;
+    color: #FFFFFF;
+}
+
+.cartOverlay__colorBtnWrapper {
+    display: flex;
+    gap: 8px;
+}
+
+.cartOverlay__colorBtn {
+    width: 20px;
+    height: 20px;
+
+    background-color: lightblue;
+    border: 1px solid #fff;
+
+    cursor: pointer;
+}
+
+.cartOverlay__colorBtn_active {
+    outline: 1px solid #5ECE7B;
+}
+
+.cartOverlay__productRightWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cartOverlay__productQuantityWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 58px;
+}
+
+.cartOverlay__quantityBtn {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: transparent;
+    border: 1px solid #1D1F22;
+    cursor: pointer;
+}
+
+.cartOverlay__productImg {
+    width: 120px;
+    height: 192px;
+    object-fit: cover;
+}

@@ -1,0 +1,26 @@
+.container {
+    margin: 0 auto;
+    padding: 160px 100px 80px;
+    width: 1440px;
+}
+
+.pdp__container {
+    display: grid;
+    grid-template-columns: 0.08fr 1fr;
+    gap: 40px;
+}
+
+
+.pdp__imagesList {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+
+    list-style-type: none;
+
+}
+
+.pdp_img {
+    cursor: pointer;
+}
