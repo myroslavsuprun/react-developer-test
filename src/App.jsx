@@ -1,6 +1,6 @@
 import Header from 'Components/Header/Header';
-import ProductCardSet from 'Components/ProductCardSet/ProductCardSet';
-import ProductPage from 'Components/ProductPage/ProductPage';
+// import ProductCardSet from 'Components/ProductCardSet/ProductCardSet';
+// import ProductPage from 'Components/ProductPage/ProductPage';
 import CartOverlay from 'Components/CartOverlay/CartOverlay';
 import CartPage from 'Components/CartPage/CartPage';
 
@@ -10,11 +10,11 @@ class App extends Component {
   render() {
     return (
       <>
-        {/* <Header /> */}
+        <Header />
         {/* <ProductCardSet /> */}
         {/* <ProductPage /> */}
-        {/* <CartOverlay /> */}
-        {/* <CartPage /> */}
+        <CartOverlay />
+        <CartPage />
       </>
     );
   }

@@ -1,34 +1,47 @@
 import React, { Component } from 'react';
 
-import css from './CartOverlay.module.css';
-import CartOverlayProduct from 'Components/CartOverlayProduct/CartOverlayProduct';
+import CartProduct from 'Components/CartProduct/CartProduct';
+
+import {
+  CartOverlayDiv,
+  CartOverlayWrapper,
+  CartOverlayTitle,
+  CartOverlayTitleSpan,
+  ProductList,
+  TotalCountWrapper,
+  TotalCountP,
+  CartOverlayBtnList,
+  CartOverlayBtn,
+} from './CartOverlay.styled';
 
 class CartOverlay extends Component {
   render() {
     return (
-      <div className={css.cartOverlay}>
-        <div className={css.cartOverlay__wrapper}>
-          <h2 className={css.cartOverlay__title}>
-            My bag, <span className={css.cartOverlay__itemSpan}>3 items</span>
-          </h2>
-          <ul className={css.cartOverlay__productList}>
-            <CartOverlayProduct />
-            <CartOverlayProduct />
-          </ul>
-          <div className={css.cartOverlay__totalWrapper}>
-            <p className={css.cartOverlay__totalP}>Total</p>
-            <span className={css.cartOverlay__totalSpan}>$200.00</span>
-          </div>
-          <ul className={css.cartOverlay__btnList}>
-            <li className={css.cartOverlay__btnItem}>
-              <button className={css.cartOverlay__mainBtn}>View bag</button>
+      <CartOverlayDiv active>
+        <CartOverlayWrapper>
+          <CartOverlayTitle>
+            My bag, <CartOverlayTitleSpan>3 items</CartOverlayTitleSpan>
+          </CartOverlayTitle>
+          <ProductList>
+            <CartProduct type="overlay" />
+            <CartProduct type="overlay" />
+          </ProductList>
+          <TotalCountWrapper>
+            <TotalCountP fw={500}>Total</TotalCountP>
+            <TotalCountP as="span" fw={700}>
+              $200.00
+            </TotalCountP>
+          </TotalCountWrapper>
+          <CartOverlayBtnList>
+            <li>
+              <CartOverlayBtn>View bag</CartOverlayBtn>
             </li>
-            <li className={css.cartOverlay__btnItem}>
-              <button className={css.cartOverlay__mainBtn}>CHECK OUT</button>
+            <li>
+              <CartOverlayBtn>CHECK OUT</CartOverlayBtn>
             </li>
-          </ul>
-        </div>
-      </div>
+          </CartOverlayBtnList>
+        </CartOverlayWrapper>
+      </CartOverlayDiv>
     );
   }
 }
