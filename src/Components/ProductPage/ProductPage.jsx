@@ -1,88 +1,78 @@
 import React, { Component } from 'react';
 
-import css from './ProductPage.module.css';
+import {
+  ContainerPDP,
+  SideImagesList,
+  SideImage,
+  DescriptionSection,
+  ActiveImage,
+  ProductTitle,
+  OptionTitle,
+  OptionBtnWrapper,
+  OptionBtn,
+  ProductPriceTitle,
+  ProductPrice,
+  BtnAddition,
+  ProductDescription,
+} from './ProductPage.styled';
 
 class ProductPage extends Component {
   render() {
     // const { name, description, gallery, prices, brand, attributes } =
     //   this.props;
     return (
-      <main className={css.pdp}>
-        <div className={`${css.container} ${css.pdp__container}`}>
-          <ul className={css.pdp__imagesList}>
+      <main>
+        <ContainerPDP>
+          <SideImagesList>
             <li>
-              <img
-                className={css.pdp_img}
-                src="https://picsum.photos/200/300"
-                alt=""
-              />
+              <SideImage src="https://picsum.photos/200/300" alt="" />
             </li>
             <li>
-              <img
-                className={css.pdp_img}
-                src="https://picsum.photos/200/300"
-                alt=""
-              />
+              <SideImage src="https://picsum.photos/200/300" alt="" />
             </li>
             <li>
-              <img
-                className={css.pdp_img}
-                src="https://picsum.photos/200/300"
-                alt=""
-              />
+              <SideImage src="https://picsum.photos/200/300" alt="" />
             </li>
-          </ul>
-          <section className={css.pdp__descripitonSection}>
-            <div className={css.pdp__activeImgWrapper}>
-              <img
-                className={css.pdp_activeImg}
-                src="https://picsum.photos/200/300"
-                alt=""
-              />
+          </SideImagesList>
+          <DescriptionSection>
+            <div>
+              <ActiveImage src="https://picsum.photos/1000/1000" alt="" />
             </div>
-            <div className={css.pdp__descriptionWrapper}>
-              <h2 className={css.pdp__title}>'Apolo'</h2>
-              <p className={`${css.pdp__type} ${css.pdp__type_marginBottom}`}>
+            <div>
+              <ProductTitle marginB={16}>Apolo</ProductTitle>
+              <ProductTitle as="p" marginB={42}>
                 Brand
-              </p>
-              <div key={value.id}>
-                <p className={`${css.pdp__sizeTitle} ${css.pdp__subtitle}`}>
-                  Name
-                </p>
-                <div className={css.pdp__colorBtnWrapper}>
-                  <button
-                    className={css.pdp__sizeBtn}
-                    style={{ backgroundColor: `${item.value}` }}
-                  ></button>
-                  })}
-                </div>
+              </ProductTitle>
+              <div>
+                <OptionTitle>Name</OptionTitle>
+                <OptionBtnWrapper gap={12} marginB={24}>
+                  <OptionBtn large={true}>16</OptionBtn>
+                  <OptionBtn large={true} active={true}>
+                    20
+                  </OptionBtn>
+                </OptionBtnWrapper>
               </div>
-              <p className={`${css.pdp__colorTitle} ${css.pdp__subtitle}`}>
-                {attributes[1].id}
-              </p>
-              <div className={css.pdp__colorBtnWrapper}>
-                {attributes[1].items.map(item => {
-                  return (
-                    <button
-                      className={css.pdp__colorBtn}
-                      style={{ backgroundColor: `${item.value}` }}
-                      key={item.id}
-                    ></button>
-                  );
-                })}
-              </div>
-              <p className={`${css.pdp__priceTitle} ${css.pdp__subtitle}`}>
-                Price:
-              </p>
-              <p className={css.pdp__price}>
-                {prices[0].currency.symbol}
-                {prices[0].amount}
-              </p>
-              <button className={css.pdp__additionBtn}>Add to cart</button>
-              <p className={css.pdp__descriptionP}>{description}</p>
+              <OptionTitle>Bla</OptionTitle>
+              <OptionBtnWrapper gap={8}>
+                <OptionBtn large={false} bColor={`blue`}></OptionBtn>
+                <OptionBtn
+                  active={true}
+                  large={false}
+                  bColor={`lightgreen`}
+                ></OptionBtn>
+                <OptionBtn large={false} bColor={`lightblue`}></OptionBtn>
+              </OptionBtnWrapper>
+              <ProductPriceTitle>Price:</ProductPriceTitle>
+              <ProductPrice>$500.00</ProductPrice>
+              <BtnAddition>Add to cart</BtnAddition>
+              <ProductDescription>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut
+                autem neque asperiores quae modi earum esse quas officia eos
+                aspernatur.
+              </ProductDescription>
             </div>
-          </section>
-        </div>
+          </DescriptionSection>
+        </ContainerPDP>
       </main>
     );
   }

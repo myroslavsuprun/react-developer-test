@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+
+import Container from 'Components/Container';
 import ProductCard from 'Components/ProductCard/ProductCard';
-import css from './ProductCardSet.module.css';
+
+import { CategoryTitle, ProductList } from './ProductCardSet.styled';
 
 class ProductCardSet extends Component {
   render() {
     return (
-      <div className={css.container}>
-        <h2 className={css.product__title}>Category name</h2>
-        <ul className={`${css.product__list} ${css.cardList}`}>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-        </ul>
-      </div>
+      <Container>
+        <CategoryTitle>Category name</CategoryTitle>
+        <ProductList>
+          <ProductCard soldOut={true} />
+          <ProductCard soldOut={false} />
+          <ProductCard soldOut={false} />
+          <ProductCard soldOut={false} />
+        </ProductList>
+      </Container>
     );
   }
 }

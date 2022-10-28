@@ -6,26 +6,28 @@ export const CartOverlayDiv = styled.div`
 
   position: fixed;
   z-index: 10;
-  left: 0;
+  right: 0;
   top: 0;
+
   width: 100vw;
   height: 100vh;
+
   background: rgba(57, 55, 72, 0.22);
 
   /* ${props => {
     if (!props.active) return;
-    // return css`
-    //   ${'body'} {
-    //     overflow: hidden;
-    //   }
-    // `;
+    //    return css`
+    //    ${'body'} {
+    //    overflow: hidden;
+    //}
+    //`;
   }} */
 `;
 
 export const CartOverlayWrapper = styled.div`
   position: fixed;
-  top: 81px;
-  left: 1440px;
+  left: calc(1440px - 300px);
+  top: 80px;
   padding: 32px 16px;
 
   background-color: #fff;

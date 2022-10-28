@@ -1,45 +1,43 @@
 import React, { Component } from 'react';
 
-import css from './ProductCard.module.css';
 import sprite from 'img/sprite.svg';
+import {
+  ProductItem,
+  ProductLink,
+  ProductImgWrapper,
+  ProductImg,
+  ProductSoldOut,
+  ProductItemButton,
+  ProductName,
+  ProductPrice,
+} from './ProductCard.styled';
 
 class ProductCard extends Component {
+  static defaultProps = {
+    soldOut: false,
+  };
+
   render() {
+    const { soldOut } = this.props;
+
     return (
-      <li
-        className={`${css.product__item} ${css.product__item_hovered} ${css.cardItem}`}
-      >
-        <a className={css.product__link} href="./pdp.html">
-          <div className={css.product_imgWrapper}>
-            <img
-              className={css.product__img}
-              src="https://picsum.photos/300/400"
-              alt=""
-            />
-            <div className={css.product__img_soldOut}>OUT OF STOCK</div>
-            <button className={css.product__button} aria-label="Add to cart">
-              <svg
-                className={css.product__svg}
-                width="24"
-                height="24"
-                fill="#fff"
-              >
+      <ProductItem soldOut={soldOut}>
+        <ProductLink href="./pdp.html">
+          <ProductImgWrapper>
+            <ProductImg src="https://picsum.photos/300/400" alt="" />
+            <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
+            <ProductItemButton aria-label="Add to cart">
+              <svg width="24" height="24" fill="#fff">
                 <use href={`${sprite}#icon-cart`}></use>
               </svg>
-            </button>
-          </div>
-          <p className={css.product__name}>Apollo Running Short</p>
-          <p className={css.product__price}>$50.00</p>
-        </a>
-      </li>
+            </ProductItemButton>
+          </ProductImgWrapper>
+          <ProductName>Apollo Running Short</ProductName>
+          <ProductPrice>$50.00</ProductPrice>
+        </ProductLink>
+      </ProductItem>
     );
   }
 }
 
 export default ProductCard;
-
-// const ProductCard = props => {
-//   return (
-
-//   );
-// };
