@@ -22,7 +22,7 @@ class ProductCard extends Component {
 
     return (
       <ProductItem soldOut={soldOut}>
-        <ProductLink href="./pdp.html">
+        <ProductLink href="#">
           <ProductImgWrapper>
             <ProductImg src="https://picsum.photos/300/400" alt="" />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>

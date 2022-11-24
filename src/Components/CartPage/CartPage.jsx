@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Container from 'Components/Container/Container';
-import CartProduct from 'Components/CartProduct/CartProduct';
+import Container from 'components/Container/Container';
+import CartProduct from 'components/CartProduct/CartProduct';
 import {
   PageTitle,
   ProductList,

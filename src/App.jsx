@@ -1,28 +1,25 @@
-import { Header } from 'Components/Header';
-import ProductCardSet from 'Components/ProductCardSet';
-// import ProductPage from 'Components/ProductPage';
-// import CartPage from 'Components/CartPage';
+// Components
+import { Component } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { SharedLayout } from 'components';
 
-import React, { Component } from 'react';
+// constants
+import ROUTES from 'constants/routes';
 
 class App extends Component {
-  state = {
-    hasError: false,
-  };
-
-  componentDidCatch() {
-    this.setState({ hasError: true });
-  }
-
   render() {
-    if (this.state.hasError) {
-      return <h1>404 Error</h1>;
-    }
-
     return (
       <>
-        <Header />
-        <ProductCardSet />
+        <Routes>
+          <Route past={ROUTES.home} element={<SharedLayout />}>
+            <Route index element={<div>Home</div>} />
+            <Route path={ROUTES.category} element={<div>Category route</div>} />
+            <Route path={ROUTES.cart} element={<div>Cart Page</div>} />
+            <Route path={ROUTES.product} element={<div>Product Page</div>} />
+          </Route>
+        </Routes>
+        {/* <Header /> */}
+        {/* <ProductCardSet /> */}
         {/* <ProductPage /> */}
         {/* <CartPage /> */}
       </>

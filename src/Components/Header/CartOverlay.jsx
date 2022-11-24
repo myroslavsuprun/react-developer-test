@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CartProduct from 'Components/CartProduct/CartProduct';
+import CartProduct from 'components/CartProduct/CartProduct';
 
 import {
   CartOverlayDiv,
@@ -17,7 +17,7 @@ import {
 class CartOverlay extends Component {
   render() {
     return (
-      <CartOverlayDiv active>
+      <CartOverlayDiv>
         <CartOverlayWrapper>
           <CartOverlayTitle>
             My bag, <CartOverlayTitleSpan>3 items</CartOverlayTitleSpan>
