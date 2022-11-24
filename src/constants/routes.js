@@ -1,8 +1,8 @@
 const ROUTES = Object.freeze({
   home: '/',
   cart: '/cart',
-  category: '/#categoryId',
-  product: '/#productId',
+  category: '/productCategoryId',
+  product: '/productId',
 });
 
 export default ROUTES;

@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { createPortal } from 'react-dom';
 
-import CartProduct from 'components/CartProduct/CartProduct';
+import { CartProduct } from 'components';
 
 import {
-  CartOverlayDiv,
+  CartOverlayBackdrop,
   CartOverlayWrapper,
   CartOverlayTitle,
   CartOverlayTitleSpan,
@@ -13,11 +14,47 @@ import {
   CartOverlayBtnList,
   CartOverlayBtn,
 } from './CartOverlay.styled';
+import ROUTES from 'constants/routes';
+
+const modalRoot = document.getElementById('modal-root');
 
 class CartOverlay extends Component {
+  componentDidMount = () => {
+    document.body.style.overflowY = 'hidden';
+    window.addEventListener('keydown', this.handleWindowKeypress);
+  };
+
+  componentWillUnmount = () => {
+    document.body.style.overflowY = 'unset';
+    window.removeEventListener('keydown', this.handleWindowKeypress);
+  };
+
+  handleOverlayBackDropClick = e => {
+    const { handleOverlayToggle } = this.props;
+
+    if (e.currentTarget === e.target) {
+      handleOverlayToggle();
+    }
+  };
+
+  handleWindowKeypress = e => {
+    const { handleOverlayToggle } = this.props;
+
+    const pressedKey = e.code;
+    if (pressedKey === `Escape`) {
+      handleOverlayToggle();
+    }
+  };
+
+  handleButtonLinkClick = () => {
+    const { handleOverlayToggle } = this.props;
+
+    handleOverlayToggle();
+  };
+
   render() {
-    return (
-      <CartOverlayDiv>
+    const component = (
+      <CartOverlayBackdrop onClick={this.handleOverlayBackDropClick}>
         <CartOverlayWrapper>
           <CartOverlayTitle>
             My bag, <CartOverlayTitleSpan>3 items</CartOverlayTitleSpan>
@@ -34,15 +71,24 @@ class CartOverlay extends Component {
           </TotalCountWrapper>
           <CartOverlayBtnList>
             <li>
-              <CartOverlayBtn>View bag</CartOverlayBtn>
+              <CartOverlayBtn
+                onClick={this.handleButtonLinkClick}
+                to={ROUTES.cart}
+              >
+                View bag
+              </CartOverlayBtn>
             </li>
             <li>
-              <CartOverlayBtn>CHECK OUT</CartOverlayBtn>
+              <CartOverlayBtn onClick={this.handleButtonLinkClick}>
+                CHECK OUT
+              </CartOverlayBtn>
             </li>
           </CartOverlayBtnList>
         </CartOverlayWrapper>
-      </CartOverlayDiv>
+      </CartOverlayBackdrop>
     );
+
+    return createPortal(component, modalRoot);
   }
 }
 

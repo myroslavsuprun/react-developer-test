@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
@@ -38,7 +39,7 @@ export const ProductItem = styled.li`
   }
 `;
 
-export const ProductLink = styled.a`
+export const ProductLink = styled(NavLink)`
   text-decoration: none;
   color: #1d1f22;
 `;

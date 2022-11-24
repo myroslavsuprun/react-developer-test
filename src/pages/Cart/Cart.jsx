@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
-import Container from 'components/Container/Container';
-import CartProduct from 'components/CartProduct/CartProduct';
+import { CartProduct } from 'components';
+
 import {
   PageTitle,
   ProductList,
@@ -9,12 +9,12 @@ import {
   TotalCountItem,
   TotalCountSpan,
   SubmitOrderBtn,
-} from './CartPage.styled';
+} from './Cart.styled';
 
 class CartPage extends Component {
   render() {
     return (
-      <Container>
+      <>
         <PageTitle>Cart</PageTitle>
         <ProductList>
           <CartProduct type="page" />
@@ -33,7 +33,7 @@ class CartPage extends Component {
           </TotalCountItem>
         </TotalCountList>
         <SubmitOrderBtn>order</SubmitOrderBtn>
-      </Container>
+      </>
     );
   }
 }

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
-import { DivContainer } from 'components/Container/Container.styled';
 
-export const ContainerPDP = styled(DivContainer)`
+export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 0.0828fr 1fr;
   gap: 40px;

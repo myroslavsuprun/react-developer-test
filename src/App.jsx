@@ -1,10 +1,14 @@
 // Components
-import { Component } from 'react';
+import { Component, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SharedLayout } from 'components';
 
 // constants
 import ROUTES from 'constants/routes';
+
+const Cart = lazy(() => import('pages/Cart/Cart'));
+const Product = lazy(() => import('pages/Product/Product'));
+const ProductList = lazy(() => import('pages/ProductList/ProductList'));
 
 class App extends Component {
   render() {
@@ -12,16 +16,12 @@ class App extends Component {
       <>
         <Routes>
           <Route past={ROUTES.home} element={<SharedLayout />}>
-            <Route index element={<div>Home</div>} />
-            <Route path={ROUTES.category} element={<div>Category route</div>} />
-            <Route path={ROUTES.cart} element={<div>Cart Page</div>} />
-            <Route path={ROUTES.product} element={<div>Product Page</div>} />
+            {/* path={ROUTES.category} */}
+            <Route index element={<ProductList />} />
+            <Route path={ROUTES.cart} element={<Cart />} />
+            <Route path={ROUTES.product} element={<Product />} />
           </Route>
         </Routes>
-        {/* <Header /> */}
-        {/* <ProductCardSet /> */}
-        {/* <ProductPage /> */}
-        {/* <CartPage /> */}
       </>
     );
   }

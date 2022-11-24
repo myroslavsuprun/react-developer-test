@@ -1,32 +1,22 @@
 import styled from 'styled-components';
-// import { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-export const CartOverlayDiv = styled.div`
-  display: ${props => (props.active ? 'block' : 'none')};
+export const CartOverlayBackdrop = styled.div`
+  display: block;
 
   position: fixed;
-  z-index: 10;
   right: 0;
   top: 0;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 
   background: rgba(57, 55, 72, 0.22);
-
-  /* ${props => {
-    if (!props.active) return;
-    //    return css`
-    //    ${'body'} {
-    //    overflow: hidden;
-    //}
-    //`;
-  }} */
 `;
 
 export const CartOverlayWrapper = styled.div`
   position: fixed;
-  left: calc(1440px - 300px);
+  right: 16%;
   top: 80px;
   padding: 32px 16px;
 
@@ -98,7 +88,7 @@ export const CartOverlayBtnList = styled.ul`
   list-style-type: none;
 `;
 
-export const CartOverlayBtn = styled.button`
+export const CartOverlayBtn = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,6 +105,7 @@ export const CartOverlayBtn = styled.button`
   font-size: 14px;
   line-height: 1.2;
   text-transform: uppercase;
+  text-decoration: none;
 
   transition: background-color 250ms linear, color 250ms linear;
   cursor: pointer;

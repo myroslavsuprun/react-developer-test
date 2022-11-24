@@ -7,7 +7,7 @@ export const CategoryTitle = styled.h2`
   font-weight: 400;
 `;
 
-export const ProductList = styled.ul`
+export const ProductListStyled = styled.ul`
   row-gap: 100px;
   column-gap: 40px;
   justify-content: center;

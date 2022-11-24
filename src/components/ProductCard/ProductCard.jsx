@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 import sprite from 'img/sprite.svg';
 import {
@@ -11,6 +11,7 @@ import {
   ProductName,
   ProductPrice,
 } from './ProductCard.styled';
+import ROUTES from 'constants/routes';
 
 class ProductCard extends Component {
   static defaultProps = {
@@ -22,7 +23,7 @@ class ProductCard extends Component {
 
     return (
       <ProductItem soldOut={soldOut}>
-        <ProductLink href="#">
+        <ProductLink to={ROUTES.product}>
           <ProductImgWrapper>
             <ProductImg src="https://picsum.photos/300/400" alt="" />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>

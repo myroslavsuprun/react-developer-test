@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
-export const HeaderTag = styled.header`
+import { NavLink } from 'react-router-dom';
+
+export const HeaderStyled = styled.header`
   position: fixed;
   z-index: 100;
 
@@ -36,37 +38,41 @@ export const LinkItem = styled.li`
   min-width: 96px;
 
   text-align: center;
+
+  ${props =>
+    props.active &&
+    css`
+      &::after {
+        content: '';
+        position: relative;
+        display: block;
+        bottom: -25px;
+
+        height: 1px;
+        width: 96px;
+
+        background-color: #5ece7b;
+      }
+    `}
 `;
 
-export const LinkItemActive = styled(LinkItem)`
-  &::after {
-    content: '';
-    position: relative;
-    display: block;
-    bottom: -25px;
-
-    height: 1px;
-    width: 96px;
-
-    background-color: #5ece7b;
-  }
-`;
-
-export const Link = styled.a`
-  color: #1d1f22;
-
+export const Link = styled(NavLink)`
   font-size: 16px;
   line-height: 1.2;
   text-decoration: none;
+  ${props =>
+    props.active
+      ? css`
+          color: #5ece7b;
+
+          font-weight: 600;
+        `
+      : css`
+          color: #1d1f22;
+        `}
 `;
 
-export const LinkActive = styled(Link)`
-  color: #5ece7b;
-
-  font-weight: 600;
-`;
-
-export const Logo = styled.a`
+export const Logo = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,6 +93,8 @@ export const OptionList = styled.ul`
 
 export const OptionItem = styled.li`
   padding-top: ${props => props.cart && '7px'};
+
+  cursor: pointer;
 
   ${props =>
     props.flex &&

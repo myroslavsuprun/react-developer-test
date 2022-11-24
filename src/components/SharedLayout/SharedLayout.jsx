@@ -1,12 +1,19 @@
-import { Component } from 'react';
+import { Component, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Header, Container } from 'components';
 
 class SharedLayout extends Component {
   render() {
     return (
       <>
-        <div>SharedLayout</div>
-        <Outlet />
+        <Header />
+        <main>
+          <Container>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Outlet />
+            </Suspense>
+          </Container>
+        </main>
       </>
     );
   }

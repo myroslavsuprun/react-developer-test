@@ -1,56 +1,101 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
-import { CurrencySwitcher, CartOverlay } from 'components/Header';
 import sprite from 'img/sprite.svg';
 
+import { CurrencySwitcher, CartOverlay } from 'components/Header';
 import {
-  HeaderTag,
+  HeaderStyled,
   HeaderContainer,
   Nav,
   LinkList,
   LinkItem,
-  LinkItemActive,
   Link,
-  LinkActive,
   Logo,
   OptionList,
   OptionItem,
 } from './Header.styled';
 
+import ROUTES from 'constants/routes';
+
+const LINKS = [
+  {
+    id: 0,
+    to: ROUTES.home,
+    text: 'Women',
+  },
+  {
+    id: 1,
+    to: ROUTES.home,
+    text: 'Men',
+  },
+  {
+    id: 2,
+    to: ROUTES.home,
+    text: 'Kids',
+    active: 'true',
+  },
+];
+
 class Header extends Component {
+  state = {
+    ifOverlayOpen: false,
+    ifCurrencyOpen: false,
+  };
+
+  handleOverlayToggle = () => {
+    this.setState(({ ifOverlayOpen }) => ({
+      ifOverlayOpen: !ifOverlayOpen,
+      ifCurrencyOpen: false,
+    }));
+  };
+
+  handleCurrencyToggle = () => {
+    this.setState(({ ifCurrencyOpen }) => ({
+      ifCurrencyOpen: !ifCurrencyOpen,
+      ifOverlayOpen: false,
+    }));
+  };
+
   render() {
+    const { ifOverlayOpen, ifCurrencyOpen } = this.state;
     return (
-      <HeaderTag>
-        <HeaderContainer>
-          <Nav>
-            <LinkList>
-              <LinkItem>
-                <Link href="#">women</Link>
-              </LinkItem>
-              <LinkItemActive>
-                <LinkActive href="">men</LinkActive>
-              </LinkItemActive>
-              <LinkItem>
-                <Link href="">kids</Link>
-              </LinkItem>
-            </LinkList>
-          </Nav>
-          <Logo href="">
-            <svg width="30" height="30">
-              <use href={`${sprite}#icon-main`}></use>
-            </svg>
-          </Logo>
-          <OptionList>
-            <CurrencySwitcher />
-            <OptionItem cart>
-              <svg width="30" height="30" fill="#1D1F22">
-                <use href={`${sprite}#icon-cart`}></use>
+      <>
+        <HeaderStyled>
+          <HeaderContainer>
+            <Nav>
+              <LinkList>
+                {LINKS.map(({ id, to, text, active }) => (
+                  <LinkItem active={active} key={id}>
+                    <Link active={active} to={to}>
+                      {text}
+                    </Link>
+                  </LinkItem>
+                ))}
+              </LinkList>
+            </Nav>
+            <Logo to={ROUTES.home}>
+              <svg width="30" height="30">
+                <use href={`${sprite}#icon-main`}></use>
               </svg>
-            </OptionItem>
-          </OptionList>
-        </HeaderContainer>
-        <CartOverlay />
-      </HeaderTag>
+            </Logo>
+            <OptionList>
+              <CurrencySwitcher
+                ifCurrencyOpen={ifCurrencyOpen}
+                handleCurrencyToggle={this.handleCurrencyToggle}
+              />
+              <OptionItem cart onClick={this.handleOverlayToggle}>
+                <svg width="30" height="30" fill="#1D1F22">
+                  <use href={`${sprite}#icon-cart`}></use>
+                </svg>
+              </OptionItem>
+            </OptionList>
+          </HeaderContainer>
+        </HeaderStyled>
+
+        {ifOverlayOpen && (
+          <CartOverlay handleOverlayToggle={this.handleOverlayToggle} />
+        )}
+      </>
     );
   }
 }
