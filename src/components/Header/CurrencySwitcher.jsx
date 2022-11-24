@@ -9,7 +9,7 @@ import {
   CurrencyItem,
 } from './CurrencySwitcher.styled';
 
-import { OptionItem } from 'componentss/Header/Header.styled';
+import { OptionItem } from 'components/Header/Header.styled';
 
 class CurrencySwitcher extends Component {
   render() {

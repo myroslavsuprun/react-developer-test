@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CartProduct from 'componentss/CartProduct/CartProduct';
+import CartProduct from 'components/CartProduct/CartProduct';
 
 import {
   CartOverlayDiv,

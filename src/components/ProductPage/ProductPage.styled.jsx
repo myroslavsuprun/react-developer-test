@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
-import { DivContainer } from 'componentss/Container/Container.styled';
+import { DivContainer } from 'components/Container/Container.styled';
 
 export const ContainerPDP = styled(DivContainer)`
   display: grid;

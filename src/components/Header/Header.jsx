@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { CurrencySwitcher, CartOverlay } from 'componentss/Header';
+import { CurrencySwitcher, CartOverlay } from 'components/Header';
 import sprite from 'img/sprite.svg';
 
 import {

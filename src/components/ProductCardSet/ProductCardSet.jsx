@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Container from 'componentss/Container';
-import ProductCard from 'componentss/ProductCard/ProductCard';
+import Container from 'components/Container';
+import ProductCard from 'components/ProductCard/ProductCard';
 
 import { CategoryTitle, ProductList } from './ProductCardSet.styled';
 
