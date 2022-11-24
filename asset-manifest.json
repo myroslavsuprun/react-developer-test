@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/react-developer-test/static/css/main.48def0e1.css",
+    "main.js": "/react-developer-test/static/js/main.6cd17e84.js",
+    "static/media/sprite.svg": "/react-developer-test/static/media/sprite.e26a2cb5a15ca2996a1f764c04e7aa25.svg",
+    "index.html": "/react-developer-test/index.html",
+    "main.48def0e1.css.map": "/react-developer-test/static/css/main.48def0e1.css.map",
+    "main.6cd17e84.js.map": "/react-developer-test/static/js/main.6cd17e84.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.48def0e1.css",
+    "static/js/main.6cd17e84.js"
+  ]
+}
