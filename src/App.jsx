@@ -1,7 +1,7 @@
 // Components
 import { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { SharedLayout } from 'components';
+import { SharedLayout } from 'componentss';
 
 // constants
 import ROUTES from 'constants/routes';
