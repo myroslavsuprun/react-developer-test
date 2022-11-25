@@ -40,7 +40,7 @@ export const ProductList = styled.ul`
   margin-bottom: 60px;
   padding: 2px 0px 2px 2px;
 
-  max-height: 400px;
+  max-height: 320px;
 
   list-style-type: none;
   overflow-y: auto;

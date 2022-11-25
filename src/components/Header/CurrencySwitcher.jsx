@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import sprite from 'img/sprite.svg';
 
@@ -60,5 +61,10 @@ class CurrencySwitcher extends Component {
     );
   }
 }
+
+CurrencySwitcher.propTypes = {
+  ifCurrencyOpen: PropTypes.bool.isRequired,
+  handleCurrencyToggle: PropTypes.func.isRequired,
+};
 
 export default CurrencySwitcher;

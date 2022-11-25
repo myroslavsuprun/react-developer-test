@@ -1,7 +1,10 @@
 // Components
 import { Component, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { SharedLayout } from 'components';
+
+// hoc
+import { withGetCategories } from 'hoc';
 
 // constants
 import ROUTES from 'constants/routes';
@@ -16,8 +19,8 @@ class App extends Component {
       <>
         <Routes>
           <Route past={ROUTES.home} element={<SharedLayout />}>
-            {/* path={ROUTES.category} */}
-            <Route index element={<ProductList />} />
+            <Route index element={<Navigate to={ROUTES.category} />} />
+            <Route path={ROUTES.category} element={<ProductList />} />
             <Route path={ROUTES.cart} element={<Cart />} />
             <Route path={ROUTES.product} element={<Product />} />
           </Route>
@@ -27,4 +30,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withGetCategories(App);

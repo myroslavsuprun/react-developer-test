@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
 import { CartProduct } from 'components';
@@ -91,5 +92,9 @@ class CartOverlay extends Component {
     return createPortal(component, modalRoot);
   }
 }
+
+CartOverlay.propTypes = {
+  handleOverlayToggle: PropTypes.func.isRequired,
+};
 
 export default CartOverlay;

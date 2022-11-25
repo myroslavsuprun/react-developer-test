@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import sprite from 'img/sprite.svg';
 import {
@@ -40,5 +41,9 @@ class ProductCard extends Component {
     );
   }
 }
+
+ProductCard.propTypes = {
+  soldOut: PropTypes.bool.isRequired,
+};
 
 export default ProductCard;

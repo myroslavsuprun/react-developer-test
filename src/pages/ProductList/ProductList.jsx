@@ -11,9 +11,9 @@ class ProductList extends Component {
         <CategoryTitle>Category name</CategoryTitle>
         <ProductListStyled>
           <ProductCard soldOut={true} />
-          <ProductCard soldOut={false} />
-          <ProductCard soldOut={false} />
-          <ProductCard soldOut={false} />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
         </ProductListStyled>
       </>
     );
