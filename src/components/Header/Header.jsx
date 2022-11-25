@@ -1,7 +1,8 @@
+// hoc
+import { withGetCategories, withUseParams } from 'hoc';
+
+// components
 import { Component } from 'react';
-
-import sprite from 'img/sprite.svg';
-
 import { CurrencySwitcher, CartOverlay } from 'components/Header';
 import {
   HeaderStyled,
@@ -9,32 +10,16 @@ import {
   Nav,
   LinkList,
   LinkItem,
-  Link,
+  LinkStyled,
   Logo,
   OptionList,
   OptionItem,
 } from './Header.styled';
 
+// other
+import PropTypes from 'prop-types';
+import sprite from 'img/sprite.svg';
 import ROUTES from 'constants/routes';
-
-const LINKS = [
-  {
-    id: 0,
-    to: ROUTES.home,
-    text: 'Women',
-  },
-  {
-    id: 1,
-    to: ROUTES.home,
-    text: 'Men',
-  },
-  {
-    id: 2,
-    to: ROUTES.home,
-    text: 'Kids',
-    active: 'true',
-  },
-];
 
 class Header extends Component {
   state = {
@@ -58,46 +43,67 @@ class Header extends Component {
 
   render() {
     const { ifOverlayOpen, ifCurrencyOpen } = this.state;
-    return (
-      <>
-        <HeaderStyled>
-          <HeaderContainer>
-            <Nav>
-              <LinkList>
-                {LINKS.map(({ id, to, text, active }) => (
-                  <LinkItem active={active} key={id}>
-                    <Link active={active} to={to}>
-                      {text}
-                    </Link>
-                  </LinkItem>
-                ))}
-              </LinkList>
-            </Nav>
-            <Logo to={ROUTES.home}>
-              <svg width="30" height="30">
-                <use href={`${sprite}#icon-main`}></use>
-              </svg>
-            </Logo>
-            <OptionList>
-              <CurrencySwitcher
-                ifCurrencyOpen={ifCurrencyOpen}
-                handleCurrencyToggle={this.handleCurrencyToggle}
-              />
-              <OptionItem cart onClick={this.handleOverlayToggle}>
-                <svg width="30" height="30" fill="#1D1F22">
-                  <use href={`${sprite}#icon-cart`}></use>
-                </svg>
-              </OptionItem>
-            </OptionList>
-          </HeaderContainer>
-        </HeaderStyled>
+    const { categoriesQueryStatus, params } = this.props;
+    const { data, isSuccess } = categoriesQueryStatus;
+    const { categoryId } = params;
 
-        {ifOverlayOpen && (
-          <CartOverlay handleOverlayToggle={this.handleOverlayToggle} />
-        )}
-      </>
-    );
+    if (isSuccess) {
+      const { categories } = data;
+
+      return (
+        <>
+          <HeaderStyled>
+            <HeaderContainer>
+              <Nav>
+                <LinkList>
+                  {categories.map(({ name }) => {
+                    let ifActive = '';
+
+                    if (name === categoryId) {
+                      ifActive = 'true';
+                    }
+
+                    return (
+                      <LinkItem active={ifActive} key={name}>
+                        <LinkStyled to={`/${name}`} active={ifActive}>
+                          {name}
+                        </LinkStyled>
+                      </LinkItem>
+                    );
+                  })}
+                </LinkList>
+              </Nav>
+              <Logo to={ROUTES.home}>
+                <svg width="30" height="30">
+                  <use href={`${sprite}#icon-main`}></use>
+                </svg>
+              </Logo>
+              <OptionList>
+                <CurrencySwitcher
+                  ifCurrencyOpen={ifCurrencyOpen}
+                  handleCurrencyToggle={this.handleCurrencyToggle}
+                />
+                <OptionItem cart onClick={this.handleOverlayToggle}>
+                  <svg width="30" height="30" fill="#1D1F22">
+                    <use href={`${sprite}#icon-cart`}></use>
+                  </svg>
+                </OptionItem>
+              </OptionList>
+            </HeaderContainer>
+          </HeaderStyled>
+
+          {ifOverlayOpen && (
+            <CartOverlay handleOverlayToggle={this.handleOverlayToggle} />
+          )}
+        </>
+      );
+    }
   }
 }
 
-export default Header;
+Header.propTypes = {
+  params: PropTypes.object.isRequired,
+  categoriesQueryStatus: PropTypes.object.isRequired,
+};
+
+export default withGetCategories(withUseParams(Header));

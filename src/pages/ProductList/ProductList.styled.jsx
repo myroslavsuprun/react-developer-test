@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CategoryTitle = styled.h2`
   margin-bottom: 100px;
+  text-transform: uppercase;
 
   font-size: 42px;
   font-weight: 400;

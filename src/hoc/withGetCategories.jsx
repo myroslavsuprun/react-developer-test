@@ -1,10 +1,11 @@
-import { useGetCategoriesQuery } from 'redux/categories/categorySlice';
+import { useGetCategoriesQuery } from 'redux/products/productsSlice';
 
 export function withGetCategories(Component) {
   return function (props) {
-    const categories = useGetCategoriesQuery();
-    console.log(categories);
+    const categoriesQueryStatus = useGetCategoriesQuery();
 
-    return <Component {...props} />;
+    return (
+      <Component categoriesQueryStatus={categoriesQueryStatus} {...props} />
+    );
   };
 }

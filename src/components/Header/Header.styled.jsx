@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const HeaderStyled = styled.header`
   position: fixed;
@@ -39,8 +39,8 @@ export const LinkItem = styled.li`
 
   text-align: center;
 
-  ${props =>
-    props.active &&
+  ${({ active }) =>
+    active &&
     css`
       &::after {
         content: '';
@@ -56,12 +56,12 @@ export const LinkItem = styled.li`
     `}
 `;
 
-export const Link = styled(NavLink)`
+export const LinkStyled = styled(Link)`
   font-size: 16px;
   line-height: 1.2;
   text-decoration: none;
-  ${props =>
-    props.active
+  ${({ active }) =>
+    active
       ? css`
           color: #5ece7b;
 
@@ -72,13 +72,11 @@ export const Link = styled(NavLink)`
         `}
 `;
 
-export const Logo = styled(NavLink)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin-left: auto;
-  margin-right: auto;
+export const Logo = styled(Link)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const OptionList = styled.ul`

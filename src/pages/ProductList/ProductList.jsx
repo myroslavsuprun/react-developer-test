@@ -1,23 +1,49 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import { ProductCard } from 'components';
+// hoc
+import { withGetProductsByCategory } from 'hoc';
 
+// components
+import { Error, Loader, ProductCard } from 'components';
 import { CategoryTitle, ProductListStyled } from './ProductList.styled';
 
 class ProductList extends Component {
   render() {
-    return (
-      <>
-        <CategoryTitle>Category name</CategoryTitle>
-        <ProductListStyled>
-          <ProductCard soldOut={true} />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-        </ProductListStyled>
-      </>
-    );
+    const { getProductsByCategoryStatus } = this.props;
+
+    const { isLoading, isError, isSuccess, error, data } =
+      getProductsByCategoryStatus;
+
+    if (isLoading) {
+      return <Loader />;
+    }
+
+    if (isError) {
+      return <Error error={error} />;
+    }
+
+    if (isSuccess) {
+      const {
+        category: { name, products },
+      } = data;
+
+      return (
+        <>
+          <CategoryTitle>{name}</CategoryTitle>
+          <ProductListStyled>
+            {products.map(product => {
+              return <ProductCard key={product.id} product={product} />;
+            })}
+          </ProductListStyled>
+        </>
+      );
+    }
   }
 }
 
-export default ProductList;
+ProductList.propTypes = {
+  getProductsByCategoryStatus: PropTypes.object.isRequired,
+};
+
+export default withGetProductsByCategory(ProductList);

@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
-let ifSoldOut = null;
+let inStock = null;
 
 export const ProductItemButton = styled.button`
   position: absolute;
@@ -22,7 +22,7 @@ export const ProductItemButton = styled.button`
 export const ProductItem = styled.li`
   // initializing styling of the ProductCard
   ${props => {
-    ifSoldOut = props.soldOut;
+    inStock = props.inStock;
   }}
 
   padding: 16px;
@@ -51,7 +51,7 @@ export const ProductImgWrapper = styled.div`
 
 export const ProductImg = styled.img`
   ${() => {
-    if (!ifSoldOut) return;
+    if (!inStock) return;
 
     return css`
       background: #ffffff;
@@ -61,8 +61,9 @@ export const ProductImg = styled.img`
 
   margin-bottom: 24px;
 
-  width: 100%;
-  object-fit: contain;
+  width: 354px;
+  height: 340px;
+  object-fit: scale-down;
 `;
 
 export const ProductSoldOut = styled.div`
@@ -72,7 +73,7 @@ export const ProductSoldOut = styled.div`
   display: none;
 
   ${() => {
-    if (!ifSoldOut) return;
+    if (!inStock) return;
 
     return css`
       display: block;
@@ -81,13 +82,15 @@ export const ProductSoldOut = styled.div`
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+
+      text-transform: uppercase;
     `;
   }}
 `;
 
 export const ProductName = styled.p`
   ${() => {
-    if (!ifSoldOut) return;
+    if (!inStock) return;
 
     return css`
       color: #8d8f9a;
@@ -98,7 +101,7 @@ export const ProductName = styled.p`
 
 export const ProductPrice = styled.p`
   ${() => {
-    if (!ifSoldOut) return;
+    if (!inStock) return;
 
     return css`
       color: #8d8f9a;

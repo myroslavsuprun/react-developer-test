@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import sprite from 'img/sprite.svg';
+// Components
 import {
   ProductItem,
   ProductLink,
@@ -12,21 +12,26 @@ import {
   ProductName,
   ProductPrice,
 } from './ProductCard.styled';
+
+// other
+import sprite from 'img/sprite.svg';
 import ROUTES from 'constants/routes';
+import { numberWithCommas } from 'js';
 
 class ProductCard extends Component {
-  static defaultProps = {
-    soldOut: false,
-  };
-
   render() {
-    const { soldOut } = this.props;
+    const { product } = this.props;
+    const { inStock, gallery, name, prices } = product;
+    const {
+      currency: { symbol },
+      amount,
+    } = prices[0];
 
     return (
-      <ProductItem soldOut={soldOut}>
+      <ProductItem inStock={inStock}>
         <ProductLink to={ROUTES.product}>
           <ProductImgWrapper>
-            <ProductImg src="https://picsum.photos/300/400" alt="" />
+            <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton aria-label="Add to cart">
               <svg width="24" height="24" fill="#fff">
@@ -34,8 +39,11 @@ class ProductCard extends Component {
               </svg>
             </ProductItemButton>
           </ProductImgWrapper>
-          <ProductName>Apollo Running Short</ProductName>
-          <ProductPrice>$50.00</ProductPrice>
+          <ProductName>{name}</ProductName>
+          <ProductPrice>
+            {symbol}
+            {numberWithCommas(amount)}
+          </ProductPrice>
         </ProductLink>
       </ProductItem>
     );
@@ -43,7 +51,13 @@ class ProductCard extends Component {
 }
 
 ProductCard.propTypes = {
-  soldOut: PropTypes.bool.isRequired,
+  product: PropTypes.shape({
+    inStock: PropTypes.bool.isRequired,
+    gallery: PropTypes.array.isRequired,
+    name: PropTypes.string.isRequired,
+    prices: PropTypes.array.isRequired,
+    id: PropTypes.string.isRequired,
+  }),
 };
 
 export default ProductCard;
