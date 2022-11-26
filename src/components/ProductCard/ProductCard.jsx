@@ -56,7 +56,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     prices: PropTypes.array.isRequired,
     id: PropTypes.string.isRequired,
-    // category: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
   }),
 };
 
