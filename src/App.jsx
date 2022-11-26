@@ -55,7 +55,19 @@ class App extends Component {
 }
 
 App.propTypes = {
-  categoriesQueryStatus: PropTypes.object.isRequired,
+  categoriesQueryStatus: PropTypes.shape({
+    data: PropTypes.shape({
+      categories: PropTypes.array.isRequired,
+    }),
+    isLoading: PropTypes.bool.isRequired,
+    isSuccess: PropTypes.bool.isRequired,
+    isError: PropTypes.bool.isRequired,
+    error: PropTypes.shape({
+      message: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      stack: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 export default withGetCategories(App);

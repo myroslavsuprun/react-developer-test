@@ -6,8 +6,9 @@ let inStock = null;
 
 export const ProductItemButton = styled.button`
   position: absolute;
-  display: none;
   padding: 14px;
+  display: none;
+  z-index: 2;
 
   width: 52px;
   height: 52px;
@@ -20,7 +21,7 @@ export const ProductItemButton = styled.button`
 `;
 
 export const ProductItem = styled.li`
-  // initializing styling of the ProductCard
+  // initializing styling for the ProductCard
   ${props => {
     inStock = props.inStock;
   }}

@@ -1,1 +1,1 @@
-export * from './numberWithCommas';
+export * from './numberWithDividers';

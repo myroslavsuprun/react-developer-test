@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const CartOverlayBackdrop = styled.div`
-  display: block;
-
   position: fixed;
   right: 0;
   top: 0;

@@ -16,7 +16,8 @@ export const SideImagesList = styled.ul`
 `;
 
 export const SideImage = styled.img`
-  object-fit: cover;
+  object-fit: scale-down;
+  height: 80px;
 
   cursor: pointer;
 `;
@@ -24,14 +25,12 @@ export const SideImage = styled.img`
 export const DescriptionSection = styled.section`
   display: grid;
 
-  grid-template-columns: 610px 292px;
+  grid-template-columns: 610px auto;
   gap: 100px;
 `;
 
 export const ActiveImage = styled.img`
-  width: 610px;
-  max-height: 493px;
-  object-fit: cover;
+  object-fit: scale-down;
 `;
 
 export const ProductTitle = styled.h2`
@@ -70,46 +69,50 @@ export const OptionBtnWrapper = styled.div`
 export const OptionBtn = styled.button`
   cursor: pointer;
 
-  ${props => {
-    if (props.large)
-      return css`
-        padding: 13px 22px;
+  ${({ type, active }) => {
+    switch (type) {
+      case 'text':
+        return css`
+          min-width: 63px;
+          max-width: 80px;
+          height: 45px;
 
-        width: 63px;
-        height: 45px;
+          background-color: transparent;
+          border: 1px solid #1d1f22;
+          color: #1d1f22;
 
-        background-color: transparent;
-        border: 1px solid #1d1f22;
-        color: #1d1f22;
+          font-family: 'Source Sans Pro', sans-serif;
+          font-size: 16px;
+          line-height: 1.12;
+          letter-spacing: 0.05em;
 
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 16px;
-        line-height: 1.12;
-        letter-spacing: 0.05em;
+          ${() => {
+            if (active)
+              return css`
+                background-color: #1d1f22;
+                color: #ffffff;
+              `;
+          }}
+        `;
 
-        ${() => {
-          if (props.active)
-            return css`
-              background-color: #1d1f22;
-              color: #ffffff;
-            `;
-        }}
-      `;
+      case 'swatch':
+        return css`
+          width: 35px;
+          height: 35px;
 
-    return css`
-      width: 35px;
-      height: 35px;
+          border: 1px solid #fff;
+          background-color: ${props => props.bgColor};
 
-      border: 1px solid #fff;
-      background-color: ${props => props.bColor};
-
-      ${() => {
-        if (props.active)
-          return css`
-            outline: 1px solid #5ece7b;
-          `;
-      }}
-    `;
+          ${() => {
+            if (active)
+              return css`
+                outline: 1px solid #5ece7b;
+              `;
+          }}
+        `;
+      default:
+        return;
+    }
   }}
 `;
 
@@ -138,15 +141,24 @@ export const BtnAddition = styled.button`
   min-width: 292px;
 
   border: none;
-  background: #5ece7b;
+  background-color: #5ece7b;
   color: #fff;
 
   text-transform: uppercase;
 
-  cursor: pointer;
+  ${({ inStock }) =>
+    inStock
+      ? css`
+          opacity: 0.6;
+          cursor: default;
+        `
+      : css`
+          opacity: 1;
+          cursor: pointer;
+        `}
 `;
 
-export const ProductDescription = styled.p`
+export const ProductDescription = styled.div`
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
 `;

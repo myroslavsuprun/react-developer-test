@@ -15,7 +15,7 @@ import {
 
 // other
 import sprite from 'img/sprite.svg';
-import { numberWithCommas } from 'js';
+import { numberWithDividers } from 'js';
 
 class ProductCard extends Component {
   render() {
@@ -24,7 +24,7 @@ class ProductCard extends Component {
     const {
       currency: { symbol },
       amount,
-    } = prices[0];
+    } = prices[4];
 
     return (
       <ProductItem inStock={inStock}>
@@ -32,7 +32,7 @@ class ProductCard extends Component {
           <ProductImgWrapper>
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
-            <ProductItemButton aria-label="Add to cart">
+            <ProductItemButton disabled={inStock} aria-label="Add to cart">
               <svg width="24" height="24" fill="#fff">
                 <use href={`${sprite}#icon-cart`}></use>
               </svg>
@@ -41,7 +41,7 @@ class ProductCard extends Component {
           <ProductName>{name}</ProductName>
           <ProductPrice>
             {symbol}
-            {numberWithCommas(amount)}
+            {numberWithDividers(amount)}
           </ProductPrice>
         </ProductLink>
       </ProductItem>

@@ -90,7 +90,7 @@ export const OptionList = styled.ul`
 `;
 
 export const OptionItem = styled.li`
-  padding-top: ${props => props.cart && '7px'};
+  padding-top: ${props => props.cart && '6px'};
 
   cursor: pointer;
 

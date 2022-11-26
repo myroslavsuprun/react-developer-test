@@ -1,6 +1,7 @@
 import { Component, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header, Container } from 'components';
+
+import { Header, Container, Loader } from 'components';
 
 class SharedLayout extends Component {
   render() {
@@ -9,7 +10,7 @@ class SharedLayout extends Component {
         <Header />
         <main>
           <Container>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loader />}>
               <Outlet />
             </Suspense>
           </Container>

@@ -1,5 +1,12 @@
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
+// hoc
+import { withGetProductById } from 'hoc';
+
+// components
+import { Markup } from 'interweave';
+import { Error, Loader } from 'components';
 import {
   GridContainer,
   SideImagesList,
@@ -16,63 +23,140 @@ import {
   ProductDescription,
 } from './Product.styled';
 
+import { numberWithDividers } from 'js';
+
 class Product extends Component {
   render() {
-    // const { name, description, gallery, prices, brand, attributes } =
-    //   this.props;
-    return (
-      <GridContainer>
-        <SideImagesList>
-          <li>
-            <SideImage src="https://picsum.photos/200/300" alt="" />
-          </li>
-          <li>
-            <SideImage src="https://picsum.photos/200/300" alt="" />
-          </li>
-          <li>
-            <SideImage src="https://picsum.photos/200/300" alt="" />
-          </li>
-        </SideImagesList>
-        <DescriptionSection>
-          <div>
-            <ActiveImage src="https://picsum.photos/1000/1000" alt="" />
-          </div>
-          <div>
-            <ProductTitle marginB={16}>Apolo</ProductTitle>
-            <ProductTitle as="p" marginB={42}>
-              Brand
-            </ProductTitle>
+    const { getProductByIdStatus } = this.props;
+    const { isSuccess, isError, isLoading, data, error } = getProductByIdStatus;
+
+    if (isLoading) {
+      return <Loader />;
+    }
+
+    if (isError) {
+      return <Error error={error} />;
+    }
+
+    if (isSuccess) {
+      const { product } = data;
+      const { gallery, name, brand, prices, description, inStock, attributes } =
+        product;
+
+      const {
+        amount,
+        currency: { symbol },
+      } = prices[0];
+
+      return (
+        <GridContainer>
+          <SideImagesList>
+            {gallery.map((image, index) => {
+              // Omitting activa image
+              if (index === 0) {
+                return <Fragment key={index}></Fragment>;
+              }
+              return (
+                <li key={index}>
+                  <SideImage src={image} alt={name} />
+                </li>
+              );
+            })}
+          </SideImagesList>
+          <DescriptionSection>
             <div>
-              <OptionTitle>Name</OptionTitle>
-              <OptionBtnWrapper gap={12} marginB={24}>
-                <OptionBtn large={true}>16</OptionBtn>
-                <OptionBtn large={true} active={true}>
-                  20
-                </OptionBtn>
-              </OptionBtnWrapper>
+              <ActiveImage src={gallery[0]} alt={name} />
             </div>
-            <OptionTitle>Bla</OptionTitle>
-            <OptionBtnWrapper gap={8}>
-              <OptionBtn large={false} bColor={`blue`}></OptionBtn>
-              <OptionBtn
-                active={true}
-                large={false}
-                bColor={`lightgreen`}
-              ></OptionBtn>
-              <OptionBtn large={false} bColor={`lightblue`}></OptionBtn>
-            </OptionBtnWrapper>
-            <ProductPriceTitle>Price:</ProductPriceTitle>
-            <ProductPrice>$500.00</ProductPrice>
-            <BtnAddition>Add to cart</BtnAddition>
-            <ProductDescription>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut autem
-              neque asperiores quae modi earum esse quas officia eos aspernatur.
-            </ProductDescription>
-          </div>
-        </DescriptionSection>
-      </GridContainer>
-    );
+            <div>
+              <ProductTitle marginB={16}>{name}</ProductTitle>
+              <ProductTitle as="p" marginB={42}>
+                {brand}
+              </ProductTitle>
+              {attributes.map(({ id, name, type, items }) => (
+                <Fragment key={id}>
+                  <OptionTitle>{name}</OptionTitle>
+                  <OptionBtnWrapper gap={12} marginB={24}>
+                    {items.map(({ displayValue, id, value }, index) => {
+                      let active = false;
+                      let bgColor = '';
+
+                      // Setting background-color for swatch type
+                      if (type === 'swatch') {
+                        bgColor = value;
+                      }
+
+                      // Setting active image
+                      if (index === 0) {
+                        active = true;
+                      }
+                      return (
+                        <Fragment key={id}>
+                          <OptionBtn
+                            active={active}
+                            type={type}
+                            bgColor={bgColor}
+                          >
+                            {type === 'text' ? displayValue : null}
+                          </OptionBtn>
+                        </Fragment>
+                      );
+                    })}
+                  </OptionBtnWrapper>
+                </Fragment>
+              ))}
+              <ProductPriceTitle>Price:</ProductPriceTitle>
+              <ProductPrice>
+                {symbol}
+                {numberWithDividers(amount)}
+              </ProductPrice>
+              <BtnAddition disapled={!inStock} inStock={inStock}>
+                {!inStock ? 'Add to cart' : 'Out of stock'}
+              </BtnAddition>
+              <ProductDescription>
+                <Markup content={description} />
+              </ProductDescription>
+            </div>
+          </DescriptionSection>
+        </GridContainer>
+      );
+    }
   }
 }
 
-export default Product;
+Product.propTypes = {
+  getProductByIdStatus: PropTypes.shape({
+    data: PropTypes.shape({
+      product: PropTypes.shape({
+        attributes: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            type: PropTypes.oneOf(['swatch', 'text']).isRequired,
+            items: PropTypes.arrayOf(
+              PropTypes.shape({
+                displayValue: PropTypes.string.isRequired,
+                value: PropTypes.string.isRequired,
+                id: PropTypes.string.isRequired,
+              })
+            ),
+          })
+        ),
+        brand: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        gallery: PropTypes.array.isRequired,
+        inStock: PropTypes.bool.isRequired,
+        name: PropTypes.string.isRequired,
+        prices: PropTypes.arrayOf(
+          PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            currency: PropTypes.shape({
+              symbol: PropTypes.string.isRequired,
+            }),
+          })
+        ),
+      }),
+    }),
+  }),
+};
+
+export default withGetProductById(Product);

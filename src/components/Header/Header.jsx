@@ -84,7 +84,7 @@ class Header extends Component {
                   handleCurrencyToggle={this.handleCurrencyToggle}
                 />
                 <OptionItem cart onClick={this.handleOverlayToggle}>
-                  <svg width="30" height="30" fill="#1D1F22">
+                  <svg width="26" height="26" fill="#1D1F22">
                     <use href={`${sprite}#icon-cart`}></use>
                   </svg>
                 </OptionItem>

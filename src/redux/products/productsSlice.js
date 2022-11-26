@@ -46,8 +46,58 @@ export const productsApi = createApi({
         },
       }),
     }),
+    getProductById: builder.query({
+      query: id => ({
+        document: gql`
+          query getProductById($id: String!) {
+            product(id: $id) {
+              name
+              inStock
+              gallery
+              description
+              brand
+              attributes {
+                id
+                name
+                type
+                items {
+                  displayValue
+                  value
+                  id
+                }
+              }
+              prices {
+                currency {
+                  symbol
+                }
+                amount
+              }
+            }
+          }
+        `,
+        variables: {
+          id,
+        },
+      }),
+    }),
+    getCurrencies: builder.query({
+      query: () => ({
+        document: gql`
+          {
+            currencies {
+              label
+              symbol
+            }
+          }
+        `,
+      }),
+    }),
   }),
 });
 
-export const { useGetCategoriesQuery, useGetProductsByCategoryQuery } =
-  productsApi;
+export const {
+  useGetCategoriesQuery,
+  useGetProductsByCategoryQuery,
+  useGetProductByIdQuery,
+  useGetCurrenciesQuery,
+} = productsApi;

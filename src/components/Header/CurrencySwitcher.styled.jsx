@@ -1,32 +1,28 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
+export const CurrencyListBackdrop = styled.div`
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+`;
 
 export const CurrencyListWrapper = styled.div`
-  position: absolute;
-  z-index: 10;
-  right: 14px;
-  bottom: -200px;
+  position: fixed;
+  right: 22%;
+  top: 84px;
   display: block;
+  transform: translateX(50%);
+
+  width: 114px;
 
   box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 
   transition: transform 300ms linear, visibility 150ms linear,
     opacity 150ms linear;
   user-select: none;
-
-  /* ${props =>
-    props.active
-      ? css`
-          visibility: visible;
-          pointer-events: all;
-          opacity: 1;
-          display: block;
-        `
-      : css`
-          visibility: none;
-          pointer-events: none;
-          opacity: 0;
-          display: none;
-        `} */
 `;
 
 export const CurrencySpan = styled.span`
