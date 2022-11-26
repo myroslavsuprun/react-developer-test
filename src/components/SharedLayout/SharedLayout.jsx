@@ -2,6 +2,7 @@ import { Component, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Header, Container, Loader } from 'components';
+import { withUpdateTitle } from 'hoc';
 
 class SharedLayout extends Component {
   render() {
@@ -20,4 +21,4 @@ class SharedLayout extends Component {
   }
 }
 
-export default SharedLayout;
+export default withUpdateTitle(SharedLayout, 'Home');

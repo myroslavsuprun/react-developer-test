@@ -57,9 +57,12 @@ export const LinkItem = styled.li`
 `;
 
 export const LinkStyled = styled(Link)`
+  padding: 20px 0;
+
   font-size: 16px;
   line-height: 1.2;
   text-decoration: none;
+
   ${({ active }) =>
     active
       ? css`
@@ -69,7 +72,7 @@ export const LinkStyled = styled(Link)`
         `
       : css`
           color: #1d1f22;
-        `}
+        `};
 `;
 
 export const Logo = styled(Link)`

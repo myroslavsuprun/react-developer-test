@@ -11,7 +11,7 @@ export const CurrencyListBackdrop = styled.div`
 
 export const CurrencyListWrapper = styled.div`
   position: fixed;
-  right: 22%;
+  right: calc(10% + ((100% - 1440px) / 2));
   top: 84px;
   display: block;
   transform: translateX(50%);
@@ -20,8 +20,6 @@ export const CurrencyListWrapper = styled.div`
 
   box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 
-  transition: transform 300ms linear, visibility 150ms linear,
-    opacity 150ms linear;
   user-select: none;
 `;
 

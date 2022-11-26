@@ -5,3 +5,5 @@ export * from './ProductCard';
 export * from './SharedLayout';
 export * from './Loader';
 export * from './Error';
+export * from './ProductImages';
+export * from './ProductDescription';

@@ -24,7 +24,7 @@ class ProductCard extends Component {
     const {
       currency: { symbol },
       amount,
-    } = prices[4];
+    } = prices[0];
 
     return (
       <ProductItem inStock={inStock}>

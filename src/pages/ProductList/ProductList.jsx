@@ -9,8 +9,20 @@ import { Error, Loader, ProductCard } from 'components';
 import { CategoryTitle, ProductListStyled } from './ProductList.styled';
 import { Navigate } from 'react-router-dom';
 import ROUTES from 'constants/routes';
+import { shopTitle } from 'constants/shopTitle';
 
 class ProductList extends Component {
+  componentDidUpdate() {
+    const { data } = this.props.getProductsByCategoryStatus;
+
+    if (data) {
+      const { category } = data;
+      const categoryName =
+        category.name.charAt(0).toUpperCase() + category.name.slice(1);
+      document.title = `${shopTitle} | ${categoryName}`;
+    }
+  }
+
   render() {
     const { getProductsByCategoryStatus } = this.props;
 

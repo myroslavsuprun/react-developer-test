@@ -1,31 +1,25 @@
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // hoc
 import { withGetProductById } from 'hoc';
 
 // components
-import { Markup } from 'interweave';
-import { Error, Loader } from 'components';
-import {
-  GridContainer,
-  SideImagesList,
-  SideImage,
-  DescriptionSection,
-  ActiveImage,
-  ProductTitle,
-  OptionTitle,
-  OptionBtnWrapper,
-  OptionBtn,
-  ProductPriceTitle,
-  ProductPrice,
-  BtnAddition,
-  ProductDescription,
-} from './Product.styled';
+import { Error, Loader, ProductDescription, ProductImages } from 'components';
+import { GridContainer } from './Product.styled';
 
-import { numberWithDividers } from 'js';
+import { shopTitle } from 'constants/shopTitle';
 
 class Product extends Component {
+  componentDidUpdate() {
+    const { data } = this.props.getProductByIdStatus;
+
+    if (data) {
+      const { product } = data;
+      document.title = `${shopTitle} | ${product.name}`;
+    }
+  }
+
   render() {
     const { getProductByIdStatus } = this.props;
     const { isSuccess, isError, isLoading, data, error } = getProductByIdStatus;
@@ -40,7 +34,7 @@ class Product extends Component {
 
     if (isSuccess) {
       const { product } = data;
-      const { gallery, name, brand, prices, description, inStock, attributes } =
+      const { gallery, name, prices, brand, description, inStock, attributes } =
         product;
 
       const {
@@ -50,73 +44,16 @@ class Product extends Component {
 
       return (
         <GridContainer>
-          <SideImagesList>
-            {gallery.map((image, index) => {
-              // Omitting activa image
-              if (index === 0) {
-                return <Fragment key={index}></Fragment>;
-              }
-              return (
-                <li key={index}>
-                  <SideImage src={image} alt={name} />
-                </li>
-              );
-            })}
-          </SideImagesList>
-          <DescriptionSection>
-            <div>
-              <ActiveImage src={gallery[0]} alt={name} />
-            </div>
-            <div>
-              <ProductTitle marginB={16}>{name}</ProductTitle>
-              <ProductTitle as="p" marginB={42}>
-                {brand}
-              </ProductTitle>
-              {attributes.map(({ id, name, type, items }) => (
-                <Fragment key={id}>
-                  <OptionTitle>{name}</OptionTitle>
-                  <OptionBtnWrapper gap={12} marginB={24}>
-                    {items.map(({ displayValue, id, value }, index) => {
-                      let active = false;
-                      let bgColor = '';
-
-                      // Setting background-color for swatch type
-                      if (type === 'swatch') {
-                        bgColor = value;
-                      }
-
-                      // Setting active image
-                      if (index === 0) {
-                        active = true;
-                      }
-                      return (
-                        <Fragment key={id}>
-                          <OptionBtn
-                            active={active}
-                            type={type}
-                            bgColor={bgColor}
-                          >
-                            {type === 'text' ? displayValue : null}
-                          </OptionBtn>
-                        </Fragment>
-                      );
-                    })}
-                  </OptionBtnWrapper>
-                </Fragment>
-              ))}
-              <ProductPriceTitle>Price:</ProductPriceTitle>
-              <ProductPrice>
-                {symbol}
-                {numberWithDividers(amount)}
-              </ProductPrice>
-              <BtnAddition disapled={!inStock} inStock={inStock}>
-                {!inStock ? 'Add to cart' : 'Out of stock'}
-              </BtnAddition>
-              <ProductDescription>
-                <Markup content={description} />
-              </ProductDescription>
-            </div>
-          </DescriptionSection>
+          <ProductImages name={name} gallery={gallery} />
+          <ProductDescription
+            brand={brand}
+            description={description}
+            inStock={inStock}
+            attributes={attributes}
+            amount={amount}
+            symbol={symbol}
+            name={name}
+          />
         </GridContainer>
       );
     }

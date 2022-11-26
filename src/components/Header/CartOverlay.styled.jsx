@@ -14,8 +14,9 @@ export const CartOverlayBackdrop = styled.div`
 
 export const CartOverlayWrapper = styled.div`
   position: fixed;
-  right: 16%;
+  right: calc(5% + ((100% - 1440px) / 2));
   top: 80px;
+
   padding: 32px 16px;
 
   background-color: #fff;
@@ -44,17 +45,20 @@ export const ProductList = styled.ul`
   overflow-y: auto;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
+    border-radius: 4px;
   }
 
   /* Track */
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
+    border-radius: 4px;
   }
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
     background: #888;
+    border-radius: 4px;
 
     /* Handle on hover */
     &:hover {

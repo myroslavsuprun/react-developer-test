@@ -10,6 +10,7 @@ import {
   TotalCountSpan,
   SubmitOrderBtn,
 } from './Cart.styled';
+import { withUpdateTitle } from 'hoc';
 
 class CartPage extends Component {
   render() {
@@ -38,4 +39,4 @@ class CartPage extends Component {
   }
 }
 
-export default CartPage;
+export default withUpdateTitle(CartPage, 'Cart');
