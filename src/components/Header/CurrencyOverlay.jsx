@@ -6,7 +6,7 @@ import {
   CurrencyList,
   CurrencyItem,
   CurrencyListBackdrop,
-} from 'components/Header/CurrencySwitcher.styled';
+} from './CurrencySwitcher.styled';
 
 const modalRoot = document.getElementById('modal-root');
 

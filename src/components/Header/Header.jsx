@@ -57,11 +57,7 @@ class Header extends Component {
               <Nav>
                 <LinkList>
                   {categories.map(({ name }) => {
-                    let ifActive = '';
-
-                    if (name === categoryId) {
-                      ifActive = 'true';
-                    }
+                    const ifActive = name === categoryId;
 
                     return (
                       <LinkItem active={ifActive} key={name}>

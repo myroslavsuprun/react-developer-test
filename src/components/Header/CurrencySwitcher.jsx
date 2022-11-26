@@ -10,7 +10,7 @@ import { OptionItem } from 'components/Header/Header.styled';
 import { Loader, Error } from 'components';
 
 import sprite from 'img/sprite.svg';
-import CurrencyOverlay from 'CurrencyOverlay';
+import CurrencyOverlay from './CurrencyOverlay';
 
 class CurrencySwitcher extends Component {
   handleCurrencyListClick = e => {
