@@ -32,6 +32,7 @@ class App extends Component {
     if (isSuccess) {
       const { categories } = data;
       const generalProductsCategory = categories[0].name;
+
       return (
         <>
           <Routes>
@@ -40,9 +41,11 @@ class App extends Component {
                 index
                 element={<Navigate to={generalProductsCategory} />}
               />
-              <Route path={ROUTES.category} element={<ProductList />} />
               <Route path={ROUTES.cart} element={<Cart />} />
-              <Route path={ROUTES.product} element={<Product />} />
+              <Route path={ROUTES.category}>
+                <Route index element={<ProductList />} />
+                <Route path={ROUTES.product} element={<Product />} />
+              </Route>
             </Route>
           </Routes>
         </>

@@ -15,13 +15,12 @@ import {
 
 // other
 import sprite from 'img/sprite.svg';
-import ROUTES from 'constants/routes';
 import { numberWithCommas } from 'js';
 
 class ProductCard extends Component {
   render() {
     const { product } = this.props;
-    const { inStock, gallery, name, prices } = product;
+    const { inStock, gallery, name, prices, id, category } = product;
     const {
       currency: { symbol },
       amount,
@@ -29,7 +28,7 @@ class ProductCard extends Component {
 
     return (
       <ProductItem inStock={inStock}>
-        <ProductLink to={ROUTES.product}>
+        <ProductLink to={`/${category}/${id}`}>
           <ProductImgWrapper>
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
@@ -57,6 +56,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     prices: PropTypes.array.isRequired,
     id: PropTypes.string.isRequired,
+    // category: PropTypes.string.isRequired,
   }),
 };
 

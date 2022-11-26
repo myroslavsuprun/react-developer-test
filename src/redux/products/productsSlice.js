@@ -30,6 +30,7 @@ export const productsApi = createApi({
                 name
                 inStock
                 gallery
+                category
                 prices {
                   currency {
                     symbol

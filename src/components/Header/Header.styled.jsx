@@ -76,7 +76,7 @@ export const Logo = styled(Link)`
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -40%);
 `;
 
 export const OptionList = styled.ul`
