@@ -68,7 +68,7 @@ class ProductOptions extends Component {
                         key={id}
                         active={ifActive}
                       >
-                        {displayValue}
+                        {value}
                       </OptionTextBtn>
                     );
                   case 'swatch':
@@ -77,8 +77,8 @@ class ProductOptions extends Component {
                         onClick={() => this.handleOptionClick(name, id)}
                         key={id}
                         active={ifActive}
-                        bgColor={value}
-                        area-label={displayValue}
+                        bgColor={displayValue}
+                        area-label={value}
                       />
                     );
                   default:
