@@ -1,5 +1,11 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
+
+// redux
+import { connect } from 'react-redux';
+import { compose } from '@reduxjs/toolkit';
+import { selectActiveCurrency } from 'redux/selectors';
 
 // hoc
 import { withGetProductById } from 'hoc';
@@ -20,8 +26,12 @@ class Product extends PureComponent {
     }
   }
 
+  memoizedActivePrice = memoize((prices, activeCurrency) =>
+    prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
+  );
+
   render() {
-    const { getProductByIdStatus } = this.props;
+    const { getProductByIdStatus, activeCurrency } = this.props;
     const { isSuccess, isError, isLoading, data, error } = getProductByIdStatus;
 
     if (isLoading) {
@@ -40,7 +50,7 @@ class Product extends PureComponent {
       const {
         amount,
         currency: { symbol },
-      } = prices[0];
+      } = this.memoizedActivePrice(prices, activeCurrency);
 
       return (
         <GridContainer>
@@ -96,4 +106,12 @@ Product.propTypes = {
   }),
 };
 
-export default withGetProductById(Product);
+const mapStateToProps = state => {
+  const activeCurrency = selectActiveCurrency(state);
+
+  return { activeCurrency };
+};
+
+const enhance = connect(mapStateToProps);
+
+export default compose(enhance, withGetProductById)(Product);
