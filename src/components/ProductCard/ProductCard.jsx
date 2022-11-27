@@ -24,6 +24,10 @@ import sprite from 'img/sprite.svg';
 import { numberWithDividers } from 'js';
 
 class ProductCard extends PureComponent {
+  handleAddToCartClick = e => {
+    e.preventDefault();
+  };
+
   memoizedActivePrice = memoize((prices, activeCurrency) =>
     prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
   );
@@ -46,7 +50,12 @@ class ProductCard extends PureComponent {
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton disabled={inStock} aria-label="Add to cart">
-              <svg width="24" height="24" fill="#fff">
+              <svg
+                onClick={this.handleAddToCartClick}
+                width="24"
+                height="24"
+                fill="#fff"
+              >
                 <use href={`${sprite}#icon-cart`}></use>
               </svg>
             </ProductItemButton>

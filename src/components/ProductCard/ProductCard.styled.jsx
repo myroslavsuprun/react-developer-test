@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
@@ -6,9 +7,9 @@ let inStock = null;
 
 export const ProductItemButton = styled.button`
   position: absolute;
-  padding: 14px;
   display: none;
-  z-index: 10;
+  align-items: center;
+  justify-content: center;
 
   width: 52px;
   height: 52px;
@@ -33,7 +34,7 @@ export const ProductItem = styled.li`
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 
     ${ProductItemButton} {
-      display: block;
+      display: flex;
 
       cursor: pointer;
     }
