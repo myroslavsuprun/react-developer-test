@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 // hoc
@@ -10,7 +10,7 @@ import { GridContainer } from './Product.styled';
 
 import { shopTitle } from 'constants/shopTitle';
 
-class Product extends Component {
+class Product extends PureComponent {
   componentDidUpdate() {
     const { data } = this.props.getProductByIdStatus;
 

@@ -50,12 +50,12 @@ export const BtnAddition = styled.button`
   ${({ inStock }) =>
     inStock
       ? css`
-          opacity: 0.6;
-          cursor: default;
-        `
-      : css`
           opacity: 1;
           cursor: pointer;
+        `
+      : css`
+          opacity: 0.6;
+          cursor: default;
         `}
 `;
 

@@ -8,7 +8,7 @@ export const ProductItemButton = styled.button`
   position: absolute;
   padding: 14px;
   display: none;
-  z-index: 2;
+  z-index: 10;
 
   width: 52px;
   height: 52px;
@@ -52,7 +52,7 @@ export const ProductImgWrapper = styled.div`
 
 export const ProductImg = styled.img`
   ${() => {
-    if (!inStock) return;
+    if (inStock) return;
 
     return css`
       background: #ffffff;
@@ -74,7 +74,7 @@ export const ProductSoldOut = styled.div`
   display: none;
 
   ${() => {
-    if (!inStock) return;
+    if (inStock) return;
 
     return css`
       display: block;
@@ -91,7 +91,7 @@ export const ProductSoldOut = styled.div`
 
 export const ProductName = styled.p`
   ${() => {
-    if (!inStock) return;
+    if (inStock) return;
 
     return css`
       color: #8d8f9a;
@@ -102,7 +102,7 @@ export const ProductName = styled.p`
 
 export const ProductPrice = styled.p`
   ${() => {
-    if (!inStock) return;
+    if (inStock) return;
 
     return css`
       color: #8d8f9a;

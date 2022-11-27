@@ -14,16 +14,19 @@ class CurrencyOverlay extends Component {
   render() {
     const {
       currencies,
-      handleCurrencySwitcherClick,
-      handleCurrencyWrapperClick,
+      handleCurrencyChooseItemClick,
+      handleCurrencyBackdropClick,
     } = this.props;
 
     const element = (
-      <CurrencyListBackdrop onClick={handleCurrencyWrapperClick}>
+      <CurrencyListBackdrop onClick={handleCurrencyBackdropClick}>
         <CurrencyListWrapper>
           <CurrencyList>
             {currencies.map(({ label, symbol }) => (
-              <CurrencyItem key={symbol} onClick={handleCurrencySwitcherClick}>
+              <CurrencyItem
+                key={symbol}
+                onClick={() => handleCurrencyChooseItemClick({ label, symbol })}
+              >
                 {symbol} {label}
               </CurrencyItem>
             ))}

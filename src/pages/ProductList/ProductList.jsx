@@ -64,7 +64,12 @@ class ProductList extends Component {
 }
 
 ProductList.propTypes = {
-  getProductsByCategoryStatus: PropTypes.object.isRequired,
+  getProductsByCategoryStatus: PropTypes.shape({
+    category: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      products: PropTypes.array.isRequired,
+    }),
+  }),
 };
 
 export default withGetProductsByCategory(ProductList);

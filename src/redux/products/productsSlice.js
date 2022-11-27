@@ -34,6 +34,7 @@ export const productsApi = createApi({
                 prices {
                   currency {
                     symbol
+                    label
                   }
                   amount
                 }

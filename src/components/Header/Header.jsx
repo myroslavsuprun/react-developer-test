@@ -20,6 +20,7 @@ import {
 import PropTypes from 'prop-types';
 import sprite from 'img/sprite.svg';
 import ROUTES from 'constants/routes';
+import { compose } from '@reduxjs/toolkit';
 
 class Header extends Component {
   state = {
@@ -57,7 +58,7 @@ class Header extends Component {
               <Nav>
                 <LinkList>
                   {categories.map(({ name }) => {
-                    const ifActive = name === categoryId;
+                    const ifActive = name === categoryId ? 1 : null;
 
                     return (
                       <LinkItem active={ifActive} key={name}>
@@ -102,4 +103,4 @@ Header.propTypes = {
   categoriesQueryStatus: PropTypes.object.isRequired,
 };
 
-export default withGetCategories(withUseParams(Header));
+export default compose(withGetCategories, withUseParams)(Header);

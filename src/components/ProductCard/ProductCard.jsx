@@ -1,5 +1,11 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
+
+// Redux
+import { connect } from 'react-redux';
+import { compose } from '@reduxjs/toolkit';
+import { selectActiveCurrency } from 'redux/selectors';
 
 // Components
 import {
@@ -17,14 +23,21 @@ import {
 import sprite from 'img/sprite.svg';
 import { numberWithDividers } from 'js';
 
-class ProductCard extends Component {
+class ProductCard extends PureComponent {
+  memoizedActivePrice = memoize((prices, activeCurrency) =>
+    prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
+  );
+
   render() {
-    const { product } = this.props;
-    const { inStock, gallery, name, prices, id, category } = product;
+    const { product, activeCurrency } = this.props;
+
+    const { inStock, gallery, name, id, category, prices } = product;
+
+    // Setting memoized currency, so it wouldn't iterate on each render
     const {
-      currency: { symbol },
       amount,
-    } = prices[0];
+      currency: { symbol },
+    } = this.memoizedActivePrice(prices, activeCurrency);
 
     return (
       <ProductItem inStock={inStock}>
@@ -54,10 +67,26 @@ ProductCard.propTypes = {
     inStock: PropTypes.bool.isRequired,
     gallery: PropTypes.array.isRequired,
     name: PropTypes.string.isRequired,
-    prices: PropTypes.array.isRequired,
+    prices: PropTypes.arrayOf(
+      PropTypes.shape({
+        amount: PropTypes.number.isRequired,
+        currency: PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          symbol: PropTypes.string.isRequired,
+        }),
+      })
+    ),
     id: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
   }),
 };
 
-export default ProductCard;
+const mapStateToProps = state => {
+  const activeCurrency = selectActiveCurrency(state);
+
+  return { activeCurrency };
+};
+
+const enhance = connect(mapStateToProps);
+
+export default compose(enhance)(ProductCard);

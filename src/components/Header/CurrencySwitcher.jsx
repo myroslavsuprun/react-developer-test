@@ -1,6 +1,12 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// refdux
+import { compose } from '@reduxjs/toolkit';
+import { connect } from 'react-redux';
+import { setActiveCurrency } from 'redux/currencies/activeCurrencySlice';
+import { selectActiveCurrency } from 'redux/selectors';
+
 // hoc
 import { withGetCurrencies } from 'hoc/withGetCurrencies';
 
@@ -13,20 +19,26 @@ import sprite from 'img/sprite.svg';
 import CurrencyOverlay from './CurrencyOverlay';
 
 class CurrencySwitcher extends Component {
-  handleCurrencyListClick = e => {
-    const { handleCurrencyToggle } = this.props;
-    if (e.currentTarget === e.target) {
-      handleCurrencyToggle();
-    }
-  };
-
-  handleCurrencySwitcherClick = () => {
+  handleCurrencyCurrentItemClick = () => {
     const { handleCurrencyToggle } = this.props;
 
     handleCurrencyToggle();
   };
 
-  handleCurrencyWrapperClick = e => {
+  handleCurrencyChooseItemClick = newCurrentCurrency => {
+    const { handleCurrencyToggle, setActiveCurrency, activeCurrency } =
+      this.props;
+
+    handleCurrencyToggle();
+
+    if (newCurrentCurrency.symbol === activeCurrency.symbol) {
+      return;
+    }
+
+    setActiveCurrency(newCurrentCurrency);
+  };
+
+  handleCurrencyBackdropClick = e => {
     const { handleCurrencyToggle } = this.props;
 
     if (e.currentTarget === e.target) {
@@ -35,7 +47,7 @@ class CurrencySwitcher extends Component {
   };
 
   render() {
-    const { ifCurrencyOpen, getCurrenciesStatus } = this.props;
+    const { ifCurrencyOpen, getCurrenciesStatus, activeCurrency } = this.props;
 
     const { data, isLoading, isSuccess, isError, error } = getCurrenciesStatus;
 
@@ -49,20 +61,19 @@ class CurrencySwitcher extends Component {
 
     if (isSuccess) {
       const { currencies } = data;
-      const activeCurrency = currencies[0].symbol;
 
       return (
         <OptionItem flex>
-          <div onClick={this.handleCurrencySwitcherClick}>
-            <CurrencySpan>{activeCurrency}</CurrencySpan>
+          <div onClick={this.handleCurrencyCurrentItemClick}>
+            <CurrencySpan>{activeCurrency.symbol}</CurrencySpan>
             <svg width="10" height="10">
               <use href={`${sprite}#icon-chevron-down`}></use>
             </svg>
           </div>
           {ifCurrencyOpen && (
             <CurrencyOverlay
-              handleCurrencyWrapperClick={this.handleCurrencyWrapperClick}
-              handleCurrencySwitcherClick={this.handleCurrencySwitcherClick}
+              handleCurrencyBackdropClick={this.handleCurrencyBackdropClick}
+              handleCurrencyChooseItemClick={this.handleCurrencyChooseItemClick}
               currencies={currencies}
             />
           )}
@@ -87,4 +98,16 @@ CurrencySwitcher.propTypes = {
   }),
 };
 
-export default withGetCurrencies(CurrencySwitcher);
+const mapStateToProps = state => {
+  const activeCurrency = selectActiveCurrency(state);
+
+  return { activeCurrency };
+};
+
+const mapDispatchToProps = {
+  setActiveCurrency,
+};
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(enhance, withGetCurrencies)(CurrencySwitcher);
