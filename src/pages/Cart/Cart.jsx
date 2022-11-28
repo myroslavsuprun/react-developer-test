@@ -1,5 +1,4 @@
 import { PureComponent } from 'react';
-import memoize from 'memoize-one';
 import PropTypes from 'prop-types';
 
 // hoc
@@ -27,10 +26,6 @@ class CartPage extends PureComponent {
 
     clearCart();
   };
-
-  memoizedActivePrice = memoize((prices, activeCurrency) =>
-    prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
-  );
 
   render() {
     const { products } = this.props;

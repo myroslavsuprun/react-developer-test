@@ -1,6 +1,8 @@
 import { PureComponent } from 'react';
-import memoize from 'memoize-one';
 import PropTypes from 'prop-types';
+
+// hoc
+import { withActiveCurrency } from 'hoc';
 
 // redux
 import { selectActiveCurrency } from 'redux/selectors';
@@ -17,9 +19,9 @@ import {
   ProductQuantityBtn,
   ProductImg,
 } from './CartProduct.styled';
+import ProductOptions from 'components/ProductDescription/ProductOptions';
 
 import sprite from 'img/sprite.svg';
-import ProductOptions from 'components/ProductDescription/ProductOptions';
 
 class CartProduct extends PureComponent {
   state = {
@@ -44,21 +46,17 @@ class CartProduct extends PureComponent {
     }));
   };
 
-  memoizedActivePrice = memoize((prices, activeCurrency) =>
-    prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
-  );
-
   render() {
     const { quantity } = this.state;
     const { type, product, activeCurrency } = this.props;
 
-    const { name, brand, prices, attributes, gallery } = product;
+    const { name, brand, attributes, gallery } = product;
 
     // Setting memoized currency, so it wouldn't iterate on each render
     const {
       amount,
       currency: { symbol },
-    } = this.memoizedActivePrice(prices, activeCurrency);
+    } = activeCurrency;
 
     return (
       <ProductItem type={type}>
@@ -110,8 +108,11 @@ CartProduct.propTypes = {
     gallery: PropTypes.array.isRequired,
   }),
   activeCurrency: PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    symbol: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+    currencies: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      symbol: PropTypes.string.isRequired,
+    }),
   }),
 };
 
@@ -123,4 +124,4 @@ const mapStateToProps = state => {
 
 const enhance = connect(mapStateToProps);
 
-export default compose(enhance)(CartProduct);
+export default compose(enhance, withActiveCurrency)(CartProduct);

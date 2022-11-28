@@ -110,4 +110,4 @@ const mapDispatchToProps = {
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(enhance, withGetCurrencies)(CurrencySwitcher);
+export default compose(withGetCurrencies, enhance)(CurrencySwitcher);

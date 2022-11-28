@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 
 let inStock = null;
 
-export const ProductItemButton = styled.button`
+export const ProductItemButton = styled.div`
   position: absolute;
   display: none;
   align-items: center;

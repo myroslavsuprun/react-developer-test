@@ -1,21 +1,13 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import memoize from 'memoize-one';
-
-// redux
-import { connect } from 'react-redux';
-import { compose } from '@reduxjs/toolkit';
-import { selectActiveCurrency } from 'redux/selectors';
-import { addCartProduct } from 'redux/cart/cartSlice';
-
-// hoc
-import { withGetProductById } from 'hoc';
 
 // components
 import { Error, Loader, ProductDescription, ProductImages } from 'components';
 import { GridContainer } from './Product.styled';
 
 import { shopTitle } from 'constants/shopTitle';
+import { withGetProductById } from 'hoc';
+import { compose } from '@reduxjs/toolkit';
 
 class Product extends PureComponent {
   componentDidUpdate() {
@@ -27,26 +19,8 @@ class Product extends PureComponent {
     }
   }
 
-  addProductToCart = () => {
-    const { addCartProduct, getProductByIdStatus } = this.props;
-
-    const {
-      data: { product },
-    } = getProductByIdStatus;
-
-    if (!product.inStock) {
-      return;
-    }
-
-    addCartProduct(product);
-  };
-
-  memoizedActivePrice = memoize((prices, activeCurrency) =>
-    prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
-  );
-
   render() {
-    const { getProductByIdStatus, activeCurrency } = this.props;
+    const { getProductByIdStatus } = this.props;
     const { isSuccess, isError, isLoading, data, error } = getProductByIdStatus;
 
     if (isLoading) {
@@ -59,26 +33,14 @@ class Product extends PureComponent {
 
     if (isSuccess) {
       const { product } = data;
-      const { gallery, name, prices, brand, description, inStock, attributes } =
-        product;
-
-      const {
-        amount,
-        currency: { symbol },
-      } = this.memoizedActivePrice(prices, activeCurrency);
+      const { gallery, name } = product;
 
       return (
         <GridContainer>
           <ProductImages name={name} gallery={gallery} />
           <ProductDescription
             addProductToCart={this.addProductToCart}
-            brand={brand}
-            description={description}
-            inStock={inStock}
-            attributes={attributes}
-            amount={amount}
-            symbol={symbol}
-            name={name}
+            product={product}
           />
         </GridContainer>
       );
@@ -122,16 +84,4 @@ Product.propTypes = {
   }),
 };
 
-const mapStateToProps = state => {
-  const activeCurrency = selectActiveCurrency(state);
-
-  return { activeCurrency };
-};
-
-const mapDispathcToProps = {
-  addCartProduct,
-};
-
-const enhance = connect(mapStateToProps, mapDispathcToProps);
-
-export default compose(enhance, withGetProductById)(Product);
+export default compose(withGetProductById)(Product);

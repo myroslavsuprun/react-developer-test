@@ -1,6 +1,8 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import memoize from 'memoize-one';
+
+// hoc
+import { withActiveCurrency } from 'hoc';
 
 // Redux
 import { connect } from 'react-redux';
@@ -37,20 +39,16 @@ class ProductCard extends PureComponent {
     addCartProduct(product);
   };
 
-  memoizedActivePrice = memoize((prices, activeCurrency) =>
-    prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
-  );
-
   render() {
     const { product, activeCurrency } = this.props;
 
-    const { inStock, gallery, name, id, category, prices } = product;
+    const { inStock, gallery, name, id, category } = product;
 
     // Setting memoized currency, so it wouldn't iterate on each render
     const {
       amount,
       currency: { symbol },
-    } = this.memoizedActivePrice(prices, activeCurrency);
+    } = activeCurrency;
 
     return (
       <ProductItem inStock={inStock}>
@@ -59,16 +57,11 @@ class ProductCard extends PureComponent {
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton
-              type="button"
+              onClick={e => this.handleAddToCartClick(e, product)}
               disabled={inStock}
               aria-label="Add to cart"
             >
-              <svg
-                onClick={e => this.handleAddToCartClick(e, product)}
-                width="24"
-                height="24"
-                fill="#fff"
-              >
+              <svg width="24" height="24" fill="#fff">
                 <use href={`${sprite}#icon-cart`}></use>
               </svg>
             </ProductItemButton>
@@ -115,4 +108,4 @@ const mapDispatchToProps = {
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(enhance)(ProductCard);
+export default compose(enhance, withActiveCurrency)(ProductCard);

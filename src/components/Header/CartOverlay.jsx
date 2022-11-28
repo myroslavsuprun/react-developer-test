@@ -102,7 +102,6 @@ class CartOverlay extends Component {
               <CartOverlayLink
                 as={NavLink}
                 onClick={this.handleButtonLinkClick}
-                z
                 to={ROUTES.cart}
               >
                 View bag

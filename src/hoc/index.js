@@ -3,3 +3,4 @@ export * from './withUseParams';
 export * from './withGetProductsByCategory';
 export * from './withGetProductById';
 export * from './withUpdateTitle';
+export * from './withActiveCurrency';
