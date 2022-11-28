@@ -1,9 +1,14 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
+
+// redux
+import { compose } from '@reduxjs/toolkit';
+import { connect } from 'react-redux';
+import { clearCart } from 'redux/cart/cartSlice';
+import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 
 import { CartProduct } from 'components';
-
 import {
   CartOverlayBackdrop,
   CartOverlayWrapper,
@@ -53,7 +58,23 @@ class CartOverlay extends Component {
     handleOverlayToggle();
   };
 
+  handleCheckoutClick = () => {
+    const { clearCart } = this.props;
+
+    clearCart();
+  };
+
   render() {
+    const { products } = this.props;
+    console.log(products);
+
+    // activeCurrency
+    // Setting memoized currency, so it wouldn't iterate on each render
+    // const {
+    //   amount,
+    //   currency: { symbol },
+    // } = this.memoizedActivePrice(prices, activeCurrency);
+
     const component = (
       <CartOverlayBackdrop onClick={this.handleOverlayBackDropClick}>
         <CartOverlayWrapper>
@@ -61,8 +82,13 @@ class CartOverlay extends Component {
             My bag, <CartOverlayTitleSpan>3 items</CartOverlayTitleSpan>
           </CartOverlayTitle>
           <ProductList>
-            <CartProduct type="overlay" />
-            <CartProduct type="overlay" />
+            {products.map(product => (
+              <CartProduct
+                key={product.id}
+                product={product}
+                type="cartOverlay"
+              />
+            ))}
           </ProductList>
           <TotalCountWrapper>
             <TotalCountP fw={500}>Total</TotalCountP>
@@ -73,6 +99,7 @@ class CartOverlay extends Component {
           <CartOverlayBtnList>
             <li>
               <CartOverlayBtn
+                type="button"
                 onClick={this.handleButtonLinkClick}
                 to={ROUTES.cart}
               >
@@ -80,7 +107,7 @@ class CartOverlay extends Component {
               </CartOverlayBtn>
             </li>
             <li>
-              <CartOverlayBtn onClick={this.handleButtonLinkClick}>
+              <CartOverlayBtn type="button" onClick={this.handleCheckoutClick}>
                 CHECK OUT
               </CartOverlayBtn>
             </li>
@@ -95,6 +122,25 @@ class CartOverlay extends Component {
 
 CartOverlay.propTypes = {
   handleOverlayToggle: PropTypes.func.isRequired,
+  products: PropTypes.array.isRequired,
+  activeCurrency: PropTypes.shape({
+    symbol: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  }),
+  clearCart: PropTypes.func.isRequired,
 };
 
-export default CartOverlay;
+const mapStateToProps = state => {
+  const products = selectCartProducts(state);
+  const activeCurrency = selectActiveCurrency(state);
+
+  return { products, activeCurrency };
+};
+
+const mapDispatchToProps = {
+  clearCart,
+};
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(enhance)(CartOverlay);

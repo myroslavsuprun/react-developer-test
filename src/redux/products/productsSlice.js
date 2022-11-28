@@ -29,8 +29,19 @@ export const productsApi = createApi({
                 id
                 name
                 inStock
+                brand
                 gallery
                 category
+                attributes {
+                  id
+                  name
+                  type
+                  items {
+                    displayValue
+                    value
+                    id
+                  }
+                }
                 prices {
                   currency {
                     symbol
@@ -52,6 +63,7 @@ export const productsApi = createApi({
         document: gql`
           query getProductById($id: String!) {
             product(id: $id) {
+              id
               name
               inStock
               gallery

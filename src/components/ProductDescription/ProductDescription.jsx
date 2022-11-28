@@ -13,6 +13,12 @@ import {
 import ProductOptions from './ProductOptions';
 
 class ProductDescription extends Component {
+  handleAddProductClick = () => {
+    const { addProductToCart } = this.props;
+
+    addProductToCart();
+  };
+
   render() {
     const { brand, description, inStock, attributes, amount, symbol, name } =
       this.props;
@@ -29,7 +35,12 @@ class ProductDescription extends Component {
           {symbol}
           {numberWithDividers(amount)}
         </ProductPrice>
-        <BtnAddition disapled={!inStock} inStock={inStock}>
+        <BtnAddition
+          type="click"
+          onClick={this.handleAddProductClick}
+          disapled={!inStock}
+          inStock={inStock}
+        >
           {inStock ? 'Add to cart' : 'Out of stock'}
         </BtnAddition>
         <ProductDescriptionStyled>

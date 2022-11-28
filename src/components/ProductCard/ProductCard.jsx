@@ -6,6 +6,7 @@ import memoize from 'memoize-one';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { selectActiveCurrency } from 'redux/selectors';
+import { addCartProduct } from 'redux/cart/cartSlice';
 
 // Components
 import {
@@ -24,8 +25,16 @@ import sprite from 'img/sprite.svg';
 import { numberWithDividers } from 'js';
 
 class ProductCard extends PureComponent {
-  handleAddToCartClick = e => {
+  handleAddToCartClick = (e, product) => {
     e.preventDefault();
+
+    if (!product.inStock) {
+      return;
+    }
+
+    const { addCartProduct } = this.props;
+
+    addCartProduct(product);
   };
 
   memoizedActivePrice = memoize((prices, activeCurrency) =>
@@ -51,7 +60,7 @@ class ProductCard extends PureComponent {
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton disabled={inStock} aria-label="Add to cart">
               <svg
-                onClick={this.handleAddToCartClick}
+                onClick={e => this.handleAddToCartClick(e, product)}
                 width="24"
                 height="24"
                 fill="#fff"
@@ -96,6 +105,10 @@ const mapStateToProps = state => {
   return { activeCurrency };
 };
 
-const enhance = connect(mapStateToProps);
+const mapDispatchToProps = {
+  addCartProduct,
+};
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(enhance)(ProductCard);

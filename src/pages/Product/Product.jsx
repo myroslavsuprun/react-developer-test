@@ -6,6 +6,7 @@ import memoize from 'memoize-one';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { selectActiveCurrency } from 'redux/selectors';
+import { addCartProduct } from 'redux/cart/cartSlice';
 
 // hoc
 import { withGetProductById } from 'hoc';
@@ -25,6 +26,20 @@ class Product extends PureComponent {
       document.title = `${shopTitle} | ${product.name}`;
     }
   }
+
+  addProductToCart = () => {
+    const { addCartProduct, getProductByIdStatus } = this.props;
+
+    const {
+      data: { product },
+    } = getProductByIdStatus;
+
+    if (!product.inStock) {
+      return;
+    }
+
+    addCartProduct(product);
+  };
 
   memoizedActivePrice = memoize((prices, activeCurrency) =>
     prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
@@ -56,6 +71,7 @@ class Product extends PureComponent {
         <GridContainer>
           <ProductImages name={name} gallery={gallery} />
           <ProductDescription
+            addProductToCart={this.addProductToCart}
             brand={brand}
             description={description}
             inStock={inStock}
@@ -112,6 +128,10 @@ const mapStateToProps = state => {
   return { activeCurrency };
 };
 
-const enhance = connect(mapStateToProps);
+const mapDispathcToProps = {
+  addCartProduct,
+};
+
+const enhance = connect(mapStateToProps, mapDispathcToProps);
 
 export default compose(enhance, withGetProductById)(Product);

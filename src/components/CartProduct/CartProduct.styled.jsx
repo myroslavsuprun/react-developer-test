@@ -14,7 +14,7 @@ export const ProductItem = styled.li`
 
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           align-items: flex-start;
 
@@ -22,7 +22,7 @@ export const ProductItem = styled.li`
             margin-top: 40px;
           }
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           padding-bottom: 26px;
 
@@ -40,7 +40,7 @@ export const ProductItem = styled.li`
 export const ProductLeftWrapper = styled.div`
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           max-width: 164px;
         `;
@@ -53,14 +53,14 @@ export const ProductLeftWrapper = styled.div`
 export const ProductTitle = styled.h3`
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           margin-bottom: 4px;
           font-weight: 300;
           font-size: 16px;
         `;
 
-      case 'page':
+      case 'cartPage':
         return css`
           font-size: 30px;
           line-height: 0.9;
@@ -90,14 +90,14 @@ export const ProductTitle = styled.h3`
 export const ProductPrice = styled.p`
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           margin-bottom: 8px;
 
           font-weight: 500;
           font-size: 16px;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           margin-bottom: 20px;
 
@@ -116,13 +116,13 @@ export const ProductSubtitleOption = styled.p`
 
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           font-size: 14px;
           line-height: 1.14;
           text-transform: capitalize;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           font-family: 'Roboto Condensed', sans-serif;
           font-weight: 700;
@@ -143,11 +143,11 @@ export const OptionBtnWrapper = styled.div`
 
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           margin-bottom: 8px;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           margin-bottom: 16px;
         `;
@@ -172,7 +172,7 @@ export const OptionBtn = styled.button`
 
         ${() => {
           switch (productStyleType) {
-            case 'overlay':
+            case 'cartOverlay':
               return css`
                 padding: 2px 2px;
 
@@ -181,7 +181,7 @@ export const OptionBtn = styled.button`
 
                 font-size: 14px;
               `;
-            case 'page':
+            case 'cartPage':
               return css`
                 padding: 13px 22px;
 
@@ -212,12 +212,12 @@ export const OptionBtn = styled.button`
 
         ${() => {
           switch (productStyleType) {
-            case 'overlay':
+            case 'cartOverlay':
               return css`
                 width: 20px;
                 height: 20px;
               `;
-            case 'page':
+            case 'cartPage':
               return css`
                 width: 35px;
                 height: 35px;
@@ -242,11 +242,11 @@ export const ProductRightWrapper = styled.div`
   align-items: center;
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           gap: 8px;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           gap: 24px;
         `;
@@ -263,11 +263,11 @@ export const ProductQuantityWrapper = styled.div`
 
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           gap: 58px;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           gap: 72px;
         `;
@@ -289,12 +289,12 @@ export const ProductQuantityBtn = styled.button`
 
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           width: 24px;
           height: 24px;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           padding: 10px;
 
@@ -316,12 +316,12 @@ export const ProductImg = styled.img`
 
   ${() => {
     switch (productStyleType) {
-      case 'overlay':
+      case 'cartOverlay':
         return css`
           width: 120px;
           height: 192px;
         `;
-      case 'page':
+      case 'cartPage':
         return css`
           width: 200px;
           height: 288px;
