@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 // redux
 import { compose } from '@reduxjs/toolkit';
@@ -17,7 +18,8 @@ import {
   ProductList,
   TotalCountWrapper,
   TotalCountP,
-  CartOverlayBtnList,
+  CartOverlayLinkList,
+  CartOverlayLink,
   CartOverlayBtn,
 } from './CartOverlay.styled';
 import ROUTES from 'constants/routes';
@@ -66,7 +68,6 @@ class CartOverlay extends Component {
 
   render() {
     const { products } = this.props;
-    console.log(products);
 
     // activeCurrency
     // Setting memoized currency, so it wouldn't iterate on each render
@@ -96,22 +97,23 @@ class CartOverlay extends Component {
               $200.00
             </TotalCountP>
           </TotalCountWrapper>
-          <CartOverlayBtnList>
+          <CartOverlayLinkList>
             <li>
-              <CartOverlayBtn
-                type="button"
+              <CartOverlayLink
+                as={NavLink}
                 onClick={this.handleButtonLinkClick}
+                z
                 to={ROUTES.cart}
               >
                 View bag
-              </CartOverlayBtn>
+              </CartOverlayLink>
             </li>
             <li>
               <CartOverlayBtn type="button" onClick={this.handleCheckoutClick}>
                 CHECK OUT
               </CartOverlayBtn>
             </li>
-          </CartOverlayBtnList>
+          </CartOverlayLinkList>
         </CartOverlayWrapper>
       </CartOverlayBackdrop>
     );

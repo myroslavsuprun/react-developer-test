@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 export const CartOverlayBackdrop = styled.div`
   position: fixed;
@@ -81,7 +80,7 @@ export const TotalCountP = styled.p`
   font-weight: ${props => props.fw};
 `;
 
-export const CartOverlayBtnList = styled.ul`
+export const CartOverlayLinkList = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -90,7 +89,7 @@ export const CartOverlayBtnList = styled.ul`
   list-style-type: none;
 `;
 
-export const CartOverlayBtn = styled(NavLink)`
+export const CartOverlayBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,3 +116,5 @@ export const CartOverlayBtn = styled(NavLink)`
     color: #fff;
   }
 `;
+
+export const CartOverlayLink = styled(CartOverlayBtn)``;

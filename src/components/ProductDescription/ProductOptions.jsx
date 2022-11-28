@@ -69,6 +69,7 @@ class ProductOptions extends PureComponent {
                         onClick={() => this.handleOptionClick(name, id)}
                         key={id}
                         active={ifActive}
+                        type="button"
                       >
                         {value}
                       </OptionTextBtn>
@@ -81,6 +82,7 @@ class ProductOptions extends PureComponent {
                         active={ifActive}
                         bgColor={displayValue}
                         area-label={value}
+                        type="button"
                       />
                     );
                   default:

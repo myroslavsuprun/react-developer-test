@@ -58,7 +58,11 @@ class ProductCard extends PureComponent {
           <ProductImgWrapper>
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
-            <ProductItemButton disabled={inStock} aria-label="Add to cart">
+            <ProductItemButton
+              type="button"
+              disabled={inStock}
+              aria-label="Add to cart"
+            >
               <svg
                 onClick={e => this.handleAddToCartClick(e, product)}
                 width="24"

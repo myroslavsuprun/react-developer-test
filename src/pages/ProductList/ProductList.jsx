@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { withGetProductsByCategory } from 'hoc';
 
 // components
+import { Navigate } from 'react-router-dom';
 import { Error, Loader, ProductCard } from 'components';
 import { CategoryTitle, ProductListStyled } from './ProductList.styled';
-import { Navigate } from 'react-router-dom';
+
 import ROUTES from 'constants/routes';
 import { shopTitle } from 'constants/shopTitle';
 

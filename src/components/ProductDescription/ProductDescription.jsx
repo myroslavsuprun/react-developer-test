@@ -36,7 +36,7 @@ class ProductDescription extends Component {
           {numberWithDividers(amount)}
         </ProductPrice>
         <BtnAddition
-          type="click"
+          type="button"
           onClick={this.handleAddProductClick}
           disapled={!inStock}
           inStock={inStock}
