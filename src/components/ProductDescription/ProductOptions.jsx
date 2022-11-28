@@ -8,64 +8,44 @@ import {
   OptionSwatchBtn,
 } from './ProductOptions.styled';
 
-const createOptionIdState = name => {
-  return `option${name}Id`;
-};
+import { createOptionIdState } from 'js';
 
 class ProductOptions extends PureComponent {
-  state = {};
-
-  componentDidMount() {
-    const { attributes } = this.props;
-
-    if (!attributes) {
-      return;
-    }
-
-    this.setState(() => {
-      const defaultAttributeValues = attributes.reduce(
-        (acc, { name, items }) => {
-          const defaultAttribute = { [createOptionIdState(name)]: items[0].id };
-
-          return { ...acc, ...defaultAttribute };
-        },
-        {}
-      );
-
-      return defaultAttributeValues;
-    });
-  }
-
   handleOptionClick = (name, id) => {
-    const stateOptionId = this.state[createOptionIdState(name)];
+    const { activeOptionBtns, handleOptionAddition } = this.props;
+    const stateOptionId = activeOptionBtns[createOptionIdState(name)];
 
     if (id === stateOptionId) {
       return;
     }
 
-    this.setState(() => ({
-      [createOptionIdState(name)]: id,
-    }));
+    handleOptionAddition({ [createOptionIdState(name)]: id });
   };
 
   render() {
-    const { attributes, type: btnStyleType } = this.props;
+    const { attributes, type: btnStyleType, activeOptionBtns } = this.props;
 
     return (
       <>
         {attributes.map(({ id, name, type, items }) => (
           <Fragment key={id}>
-            <OptionTitle>{name}</OptionTitle>
-            <OptionBtnWrapper type={type} marginB={btnStyleType ? 16 : 24}>
+            <OptionTitle pageStyleType={btnStyleType}>{name}</OptionTitle>
+            <OptionBtnWrapper
+              pageStyleType={btnStyleType}
+              type={type}
+              marginB={btnStyleType ? 16 : 24}
+            >
               {items.map(({ displayValue, id, value }) => {
-                const stateOptionId = this.state[createOptionIdState(name)];
+                const activeOptionBtn =
+                  activeOptionBtns[createOptionIdState(name)];
 
-                const ifActive = id === stateOptionId;
+                const ifActive = id === activeOptionBtn;
 
                 switch (type) {
                   case 'text':
                     return (
                       <OptionTextBtn
+                        pageStyleType={btnStyleType}
                         onClick={() => this.handleOptionClick(name, id)}
                         key={id}
                         active={ifActive}
@@ -77,6 +57,7 @@ class ProductOptions extends PureComponent {
                   case 'swatch':
                     return (
                       <OptionSwatchBtn
+                        pageStyleType={btnStyleType}
                         onClick={() => this.handleOptionClick(name, id)}
                         key={id}
                         active={ifActive}

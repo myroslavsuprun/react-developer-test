@@ -21,20 +21,55 @@ import {
 } from './ProductDescription.styled';
 import ProductOptions from './ProductOptions';
 
-import { numberWithDividers } from 'js';
+import { numberWithDividers, createOptionIdState } from 'js';
 
 class ProductDescription extends Component {
+  state = {
+    optionValues: {},
+  };
+
+  componentDidMount() {
+    const {
+      product: { attributes },
+    } = this.props;
+
+    if (!attributes) {
+      return;
+    }
+
+    this.setState(() => {
+      const defaultAttributeValues = attributes.reduce(
+        (acc, { name, items }) => {
+          const defaultAttribute = { [createOptionIdState(name)]: items[0].id };
+
+          return { ...acc, ...defaultAttribute };
+        },
+        {}
+      );
+
+      return { optionValues: defaultAttributeValues };
+    });
+  }
+
   handleAddProductClick = () => {
     const { addCartProduct, product } = this.props;
+    const { optionValues } = this.state;
 
     if (!product.inStock) {
       return;
     }
 
-    addCartProduct(product);
+    addCartProduct({ ...product, optionValues: { ...optionValues } });
+  };
+
+  handleOptionAddition = optionUpdate => {
+    this.setState(prevState => ({
+      optionValues: { ...prevState.optionValues, ...optionUpdate },
+    }));
   };
 
   render() {
+    const { optionValues } = this.state;
     const { product, activeCurrency } = this.props;
 
     const { brand, description, inStock, attributes, name } = product;
@@ -50,7 +85,11 @@ class ProductDescription extends Component {
         <ProductTitle as="p" marginB={42}>
           {brand}
         </ProductTitle>
-        <ProductOptions attributes={attributes} />
+        <ProductOptions
+          handleOptionAddition={this.handleOptionAddition}
+          activeOptionBtns={optionValues}
+          attributes={attributes}
+        />
         <ProductPriceTitle>Price:</ProductPriceTitle>
         <ProductPrice>
           {symbol}

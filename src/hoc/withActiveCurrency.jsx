@@ -9,8 +9,7 @@ export const withActiveCurrency = Component => {
 
     render() {
       const { activeCurrency, ...otherProps } = this.props;
-      const prices =
-        this.props?.products?.prices ?? this.props?.product?.prices;
+      const { prices } = this.props?.products ?? this.props?.product;
 
       // Setting memoized currency, so it wouldn't iterate on each render
       const memoizedCurrency = this.memoizedActivePrice(prices, activeCurrency);

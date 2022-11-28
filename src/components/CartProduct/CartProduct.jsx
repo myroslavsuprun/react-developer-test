@@ -19,7 +19,7 @@ import {
   ProductQuantityBtn,
   ProductImg,
 } from './CartProduct.styled';
-import ProductOptions from 'components/ProductDescription/ProductOptions';
+// import ProductOptions from 'components/ProductDescription/ProductOptions';
 
 import sprite from 'img/sprite.svg';
 
@@ -50,8 +50,8 @@ class CartProduct extends PureComponent {
     const { quantity } = this.state;
     const { type, product, activeCurrency } = this.props;
 
-    const { name, brand, attributes, gallery } = product;
-
+    const { name, brand, gallery } = product;
+    //  attributes,
     // Setting memoized currency, so it wouldn't iterate on each render
     const {
       amount,
@@ -67,7 +67,7 @@ class CartProduct extends PureComponent {
             {symbol}
             {amount}
           </ProductPrice>
-          <ProductOptions type={type} attributes={attributes} />
+          {/* <ProductOptions type={type} attributes={attributes} /> */}
         </ProductLeftWrapper>
         <ProductRightWrapper gap={8}>
           <ProductQuantityWrapper gap={58}>

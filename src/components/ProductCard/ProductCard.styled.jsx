@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 
 let inStock = null;
 
-export const ProductItemButton = styled.div`
+export const ProductItemButton = styled.button`
   position: absolute;
   display: none;
   align-items: center;
@@ -34,7 +34,7 @@ export const ProductItem = styled.li`
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 
     ${ProductItemButton} {
-      display: flex;
+      display: ${() => (inStock ? 'flex' : 'none')};
 
       cursor: pointer;
     }

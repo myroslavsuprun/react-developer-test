@@ -1,5 +1,6 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+// import memoize from 'memoize-one';
 
 // hoc
 import { withActiveCurrency } from 'hoc';
@@ -7,7 +8,7 @@ import { withActiveCurrency } from 'hoc';
 // Redux
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
-import { selectActiveCurrency } from 'redux/selectors';
+import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 import { addCartProduct } from 'redux/cart/cartSlice';
 
 // Components
@@ -39,12 +40,20 @@ class ProductCard extends PureComponent {
     addCartProduct(product);
   };
 
+  // memoized = memoize((prices, activeCurrency) =>
+  //   prices.find(({ currency }) => currency.symbol === activeCurrency.symbol)
+  // );
+
   render() {
     const { product, activeCurrency } = this.props;
+    // cartProducts
 
     const { inStock, gallery, name, id, category } = product;
 
-    // Setting memoized currency, so it wouldn't iterate on each render
+    // const ifInCart = cartProducts.some(cartProduct => cartProduct.id === id);
+
+    // console.log(ifInCart, '----', id);
+
     const {
       amount,
       currency: { symbol },
@@ -58,8 +67,8 @@ class ProductCard extends PureComponent {
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton
               onClick={e => this.handleAddToCartClick(e, product)}
-              disabled={inStock}
               aria-label="Add to cart"
+              type="button"
             >
               <svg width="24" height="24" fill="#fff">
                 <use href={`${sprite}#icon-cart`}></use>
@@ -98,8 +107,9 @@ ProductCard.propTypes = {
 
 const mapStateToProps = state => {
   const activeCurrency = selectActiveCurrency(state);
+  const cartProducts = selectCartProducts(state);
 
-  return { activeCurrency };
+  return { activeCurrency, cartProducts };
 };
 
 const mapDispatchToProps = {
