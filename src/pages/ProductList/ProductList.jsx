@@ -43,7 +43,7 @@ class ProductList extends Component {
       // If we type any route and do not receive a category match,
       // then we get redirected to our primary category page.
       if (!data.category) {
-        return <Navigate to={ROUTES.home} />;
+        return <Navigate to={ROUTES.home} replace />;
       }
 
       const {
