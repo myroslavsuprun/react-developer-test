@@ -8,6 +8,10 @@ import { withActiveCurrency } from 'hoc';
 import { selectActiveCurrency } from 'redux/selectors';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
+import {
+  incrementProductQuantityById,
+  decrementProductQuantityById,
+} from 'redux/cart/cartSlice';
 
 // components
 import CartProductOptions from './CartProductOptions';
@@ -31,26 +35,21 @@ import cartType from 'constants/cartType';
 
 class CartProduct extends PureComponent {
   state = {
-    quantity: 1,
     activeImageIndex: 0,
   };
 
   handleQuantityIncrement = () => {
-    this.setState(prevState => ({
-      quantity: prevState.quantity + 1,
-    }));
+    const { incrementProductQuantityById, product } = this.props;
+    const { id } = product;
+
+    incrementProductQuantityById(id);
   };
 
   handleQuantityDecrement = () => {
-    const { quantity } = this.state;
+    const { decrementProductQuantityById, product } = this.props;
+    const { id } = product;
 
-    if (quantity === 1) {
-      return;
-    }
-
-    this.setState(prevState => ({
-      quantity: prevState.quantity - 1,
-    }));
+    decrementProductQuantityById(id);
   };
 
   handleNextImageBtn = () => {
@@ -82,10 +81,11 @@ class CartProduct extends PureComponent {
   };
 
   render() {
-    const { quantity, activeImageIndex } = this.state;
+    const { activeImageIndex } = this.state;
     const { cartType: cartTypeProp, product, activeCurrency } = this.props;
 
-    const { name, brand, attributes, gallery, optionValues } = product;
+    const { name, brand, attributes, gallery, optionValues, quantity } =
+      product;
 
     const {
       amount,
@@ -166,6 +166,7 @@ class CartProduct extends PureComponent {
 CartProduct.propTypes = {
   cartType: PropTypes.string.isRequired,
   product: PropTypes.shape({
+    quantity: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
     prices: PropTypes.array.isRequired,
@@ -187,6 +188,11 @@ const mapStateToProps = state => {
   return { activeCurrency };
 };
 
-const enhance = connect(mapStateToProps);
+const mapDispatchToProps = {
+  incrementProductQuantityById,
+  decrementProductQuantityById,
+};
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(enhance, withActiveCurrency)(CartProduct);

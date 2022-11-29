@@ -27,14 +27,13 @@ import sprite from 'img/sprite.svg';
 import { numberWithDividers } from 'js';
 
 class ProductCard extends PureComponent {
-  handleAddToCartClick = (e, product) => {
+  handleAddToCartClick = e => {
     e.preventDefault();
+    const { addCartProduct, product } = this.props;
 
     if (!product.inStock) {
       return;
     }
-
-    const { addCartProduct } = this.props;
 
     addCartProduct(product);
   };
@@ -56,7 +55,7 @@ class ProductCard extends PureComponent {
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton
-              onClick={e => this.handleAddToCartClick(e, product)}
+              onClick={this.handleAddToCartClick}
               aria-label={ifProductInCart ? 'Remove from cart' : 'Add to cart'}
               type="button"
               ifProductInCart={ifProductInCart}

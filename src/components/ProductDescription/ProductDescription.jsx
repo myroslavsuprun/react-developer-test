@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Markup } from 'interweave';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
 
 // redux
 import { connect } from 'react-redux';
@@ -9,8 +10,10 @@ import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 import { addCartProduct } from 'redux/cart/cartSlice';
 
 // hoc
-import { withActiveCurrency, withIfProductInCart } from 'hoc';
+import { withActiveCurrency } from 'hoc';
 
+// components
+import ProductOptions from './ProductOptions';
 import {
   DescriptionSection,
   ProductTitle,
@@ -19,9 +22,12 @@ import {
   BtnAddition,
   ProductDescriptionStyled,
 } from './ProductDescription.styled';
-import ProductOptions from './ProductOptions';
 
-import { numberWithDividers, createOptionIdState } from 'js';
+import {
+  numberWithDividers,
+  createDefaultOptionValues,
+  createProductIdWithOptionValues,
+} from 'js';
 
 class ProductDescription extends Component {
   state = {
@@ -38,14 +44,7 @@ class ProductDescription extends Component {
     }
 
     this.setState(() => {
-      const defaultAttributeValues = attributes.reduce(
-        (acc, { name, items }) => {
-          const defaultAttribute = { [createOptionIdState(name)]: items[0].id };
-
-          return { ...acc, ...defaultAttribute };
-        },
-        {}
-      );
+      const defaultAttributeValues = createDefaultOptionValues(attributes);
 
       return { optionValues: defaultAttributeValues };
     });
@@ -68,11 +67,26 @@ class ProductDescription extends Component {
     }));
   };
 
+  memoizedIfInCardValue = memoize((cartProducts, id) =>
+    cartProducts.some(cartProduct => cartProduct.id === id)
+  );
+
   render() {
     const { optionValues } = this.state;
-    const { product, activeCurrency, ifProductInCart } = this.props;
+    const { product, activeCurrency, cartProducts } = this.props;
 
-    const { brand, description, inStock, attributes, name } = product;
+    const { brand, description, inStock, attributes, name, id } = product;
+
+    const optionValuesArray = Object.values(optionValues);
+    const idWithOptionValues = createProductIdWithOptionValues(
+      id,
+      optionValuesArray
+    );
+
+    const ifProductInCart = this.memoizedIfInCardValue(
+      cartProducts,
+      idWithOptionValues
+    );
 
     const {
       amount,
@@ -167,8 +181,4 @@ const mapDispathcToProps = {
 
 const enhance = connect(mapStateToProps, mapDispathcToProps);
 
-export default compose(
-  enhance,
-  withActiveCurrency,
-  withIfProductInCart
-)(ProductDescription);
+export default compose(enhance, withActiveCurrency)(ProductDescription);

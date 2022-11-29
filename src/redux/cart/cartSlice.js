@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { createOptionIdState } from 'js';
+import { createProductIdWithOptionValues, createDefaultOptionValues } from 'js';
 
 const initialState = {
   products: [],
@@ -43,26 +43,61 @@ export const cartSlice = createSlice({
         state.products.push(payload);
       },
       prepare(payload) {
-        // If we update our product cart from PLP, then we have to set default options for our products
+        // If we update our product cart from PLP, then we have to set default options
         if (!payload.optionValues) {
           const { attributes } = payload;
 
-          const optionValues = attributes.reduce((acc, { name, items }) => {
-            return { ...acc, [createOptionIdState(name)]: items[0].id };
-          }, {});
+          const optionValues = createDefaultOptionValues(attributes);
 
-          return {
-            payload: { ...payload, optionValues: { ...optionValues } },
-          };
+          payload = { ...payload, optionValues: { ...optionValues } };
         }
 
-        return { payload };
+        // Setting unique id for our product
+        const { optionValues } = payload;
+
+        const optionValuesArray = Object.values(optionValues);
+        payload.id = createProductIdWithOptionValues(
+          payload.id,
+          optionValuesArray
+        );
+
+        // Setting default quantity 1 for our cart product
+        return { payload: { ...payload, quantity: 1 } };
       },
     },
     clearCart: state => {
       state.products = [];
     },
+    incrementProductQuantityById: (state, { payload }) => {
+      const { products } = state;
+
+      const matchedProductIndex = products.findIndex(
+        ({ id }) => payload === id
+      );
+
+      products[matchedProductIndex].quantity += 1;
+    },
+    decrementProductQuantityById: (state, { payload }) => {
+      const { products } = state;
+
+      const matchedProductIndex = products.findIndex(
+        ({ id }) => payload === id
+      );
+      const matchedProduct = products[matchedProductIndex];
+
+      if (matchedProduct.quantity <= 1) {
+        products.splice(matchedProductIndex, 1);
+        return;
+      }
+
+      matchedProduct.quantity -= 1;
+    },
   },
 });
 
-export const { addCartProduct, clearCart } = cartSlice.actions;
+export const {
+  addCartProduct,
+  clearCart,
+  incrementProductQuantityById,
+  decrementProductQuantityById,
+} = cartSlice.actions;
