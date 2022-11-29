@@ -19,14 +19,20 @@ import {
   ProductRightWrapper,
   ProductQuantityWrapper,
   ProductQuantityBtn,
+  ChangeImgWrapper,
   ProductImg,
+  ChangeImgButtonWrapper,
+  ImgChangeBtn,
 } from './CartProduct.styled';
 
+// other
 import sprite from 'img/sprite.svg';
+import cartType from 'constants/cartType';
 
 class CartProduct extends PureComponent {
   state = {
     quantity: 1,
+    activeImageIndex: 0,
   };
 
   handleQuantityIncrement = () => {
@@ -47,9 +53,37 @@ class CartProduct extends PureComponent {
     }));
   };
 
+  handleNextImageBtn = () => {
+    const { activeImageIndex } = this.state;
+    const { product } = this.props;
+    const { gallery } = product;
+
+    const galleryLength = gallery.length;
+
+    if (activeImageIndex === galleryLength - 1) {
+      return;
+    }
+
+    this.setState(prevState => ({
+      activeImageIndex: prevState.activeImageIndex + 1,
+    }));
+  };
+
+  handlePreviousImageBtn = () => {
+    const { activeImageIndex } = this.state;
+
+    if (activeImageIndex === 0) {
+      return;
+    }
+
+    this.setState(prevState => ({
+      activeImageIndex: prevState.activeImageIndex - 1,
+    }));
+  };
+
   render() {
-    const { quantity } = this.state;
-    const { cartType, product, activeCurrency } = this.props;
+    const { quantity, activeImageIndex } = this.state;
+    const { cartType: cartTypeProp, product, activeCurrency } = this.props;
 
     const { name, brand, attributes, gallery, optionValues } = product;
 
@@ -58,8 +92,11 @@ class CartProduct extends PureComponent {
       currency: { symbol },
     } = activeCurrency;
 
+    const ifImgBtnsShown =
+      cartTypeProp === cartType.page && gallery.length >= 2;
+
     return (
-      <ProductItem cartType={cartType}>
+      <ProductItem cartType={cartTypeProp}>
         <ProductLeftWrapper>
           <ProductTitle>{name}</ProductTitle>
           <ProductTitle as="p">{brand}</ProductTitle>
@@ -69,12 +106,12 @@ class CartProduct extends PureComponent {
           </ProductPrice>
           <CartProductOptions
             activeOptionValues={optionValues}
-            cartType={cartType}
+            cartType={cartTypeProp}
             attributes={attributes}
           />
         </ProductLeftWrapper>
         <ProductRightWrapper gap={8}>
-          <ProductQuantityWrapper gap={58}>
+          <ProductQuantityWrapper>
             <ProductQuantityBtn
               onClick={this.handleQuantityIncrement}
               type="button"
@@ -95,7 +132,31 @@ class CartProduct extends PureComponent {
               </svg>
             </ProductQuantityBtn>
           </ProductQuantityWrapper>
-          <ProductImg src={gallery[0]} alt={name} />
+          <ChangeImgWrapper>
+            <ProductImg src={gallery[activeImageIndex]} alt={name} />
+            {ifImgBtnsShown && (
+              <ChangeImgButtonWrapper>
+                <ImgChangeBtn
+                  onClick={this.handlePreviousImageBtn}
+                  type="button"
+                  area-label="previous image"
+                >
+                  <svg width="14" height="14">
+                    <use href={`${sprite}#icon-chevron-left`}></use>
+                  </svg>
+                </ImgChangeBtn>
+                <ImgChangeBtn
+                  onClick={this.handleNextImageBtn}
+                  type="button"
+                  area-label="next image"
+                >
+                  <svg width="14" height="14">
+                    <use href={`${sprite}#icon-chevron-right`}></use>
+                  </svg>
+                </ImgChangeBtn>
+              </ChangeImgButtonWrapper>
+            )}
+          </ChangeImgWrapper>
         </ProductRightWrapper>
       </ProductItem>
     );

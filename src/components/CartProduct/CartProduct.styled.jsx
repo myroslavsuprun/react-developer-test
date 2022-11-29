@@ -237,6 +237,10 @@ export const OptionSwatchBtn = styled(OptionBtn)`
 export const ProductRightWrapper = styled.div`
   display: flex;
   align-items: center;
+  align-self: center;
+
+  height: inherit;
+
   ${() => {
     switch (productStyleType) {
       case cartType.overlay:
@@ -256,20 +260,21 @@ export const ProductRightWrapper = styled.div`
 export const ProductQuantityWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
 
   ${() => {
     switch (productStyleType) {
-      case cartType.overlay:
-        return css`
-          gap: 58px;
-        `;
       case cartType.page:
         return css`
-          gap: 72px;
+          min-height: 288px;
+        `;
+      case cartType.overlay:
+        return css`
+          min-height: 192px;
         `;
       default:
-        return;
+        return null;
     }
   }}
 `;
@@ -309,7 +314,7 @@ export const ProductImgWrapper = styled.div`
 `;
 
 export const ProductImg = styled.img`
-  object-fit: cover;
+  object-fit: scale-down;
 
   ${() => {
     switch (productStyleType) {
@@ -329,6 +334,10 @@ export const ProductImg = styled.img`
   }}
 `;
 
+export const ChangeImgWrapper = styled.div`
+  position: relative;
+`;
+
 export const ChangeImgButtonWrapper = styled.div`
   position: absolute;
   bottom: 16px;
@@ -342,7 +351,6 @@ export const ImgChangeBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 8px;
 
   width: 24px;
   height: 24px;

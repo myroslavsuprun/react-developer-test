@@ -11,6 +11,13 @@ export const PageTitle = styled.h1`
   text-transform: uppercase;
 `;
 
+export const NoProductsStub = styled.p`
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+  font-weight: 600;
+`;
+
 export const ProductList = styled.ul`
   padding: 24px 0;
   margin-bottom: 32px;

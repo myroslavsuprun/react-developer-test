@@ -19,6 +19,7 @@ import {
   TotalCountItem,
   TotalCountSpan,
   SubmitOrderBtn,
+  NoProductsStub,
 } from './Cart.styled';
 
 // constants
@@ -34,24 +35,21 @@ class CartPage extends PureComponent {
   render() {
     const { products } = this.props;
 
-    // activeCurrency
-    // Setting memoized currency, so it wouldn't iterate on each render
-    // const {
-    //   amount,
-    //   currency: { symbol },
-    // } = this.memoizedActivePrice(prices, activeCurrency);
-
     return (
       <>
         <PageTitle>Cart</PageTitle>
         <ProductList>
-          {products.map(product => (
-            <CartProduct
-              key={product.id}
-              product={product}
-              cartType={cartType.page}
-            />
-          ))}
+          {products.length === 0 ? (
+            <NoProductsStub>The cart is empty</NoProductsStub>
+          ) : (
+            products.map(product => (
+              <CartProduct
+                key={product.id}
+                product={product}
+                cartType={cartType.page}
+              />
+            ))
+          )}
         </ProductList>
         <TotalCountList>
           <TotalCountItem>
