@@ -18,6 +18,7 @@ export const ProductItem = styled.li`
       case cartType.overlay:
         return css`
           align-items: flex-start;
+          gap: 4px;
 
           & + & {
             margin-top: 40px;
@@ -43,7 +44,7 @@ export const ProductLeftWrapper = styled.div`
     switch (productStyleType) {
       case cartType.overlay:
         return css`
-          max-width: 164px;
+          max-width: 130px;
         `;
       default:
         return;
@@ -158,80 +159,77 @@ export const OptionBtnWrapper = styled.div`
   }}
 `;
 
-export const OptionBtn = styled.button`
+export const OptionBtn = styled.button``;
+
+export const OptionTextBtn = styled(OptionBtn)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+  border: 1px solid #1d1f22;
+
+  color: #1d1f22;
+
+  font-family: 'Source Sans Pro', sans-serif;
+
+  ${() => {
+    switch (productStyleType) {
+      case cartType.overlay:
+        return css`
+          min-width: 24px;
+          min-height: 24px;
+
+          font-size: 14px;
+        `;
+      case cartType.page:
+        return css`
+          min-width: 63px;
+          min-height: 45px;
+
+          font-size: 16px;
+          line-height: 1.12;
+          letter-spacing: 0.05em;
+        `;
+      default:
+        return;
+    }
+  }}
+
   ${props => {
-    if (props.large)
+    if (props.active)
       return css`
-        background-color: transparent;
-        border: 1px solid #1d1f22;
-
-        color: #1d1f22;
-
-        font-family: 'Source Sans Pro', sans-serif;
-
-        ${() => {
-          switch (productStyleType) {
-            case cartType.overlay:
-              return css`
-                padding: 2px 2px;
-
-                min-width: 24px;
-                min-height: 24px;
-
-                font-size: 14px;
-              `;
-            case cartType.page:
-              return css`
-                padding: 13px 22px;
-
-                max-width: 63px;
-                max-height: 45px;
-
-                font-size: 16px;
-                line-height: 1.12;
-                letter-spacing: 0.05em;
-              `;
-            default:
-              return;
-          }
-        }}
-
-        ${() => {
-          if (props.active)
-            return css`
-              background-color: #1d1f22;
-              color: #ffffff;
-            `;
-        }}
+        background-color: #1d1f22;
+        color: #ffffff;
       `;
-    else
+  }}
+`;
+
+export const OptionSwatchBtn = styled(OptionBtn)`
+  background-color: ${({ bgColor }) => bgColor};
+  border: 1px solid #fff;
+
+  ${() => {
+    switch (productStyleType) {
+      case cartType.overlay:
+        return css`
+          width: 20px;
+          height: 20px;
+        `;
+      case cartType.page:
+        return css`
+          width: 35px;
+          height: 35px;
+        `;
+      default:
+        return;
+    }
+  }}
+
+  ${props => {
+    if (props.active)
       return css`
-        background-color: lightblue;
-        border: 1px solid #fff;
-
-        ${() => {
-          switch (productStyleType) {
-            case cartType.overlay:
-              return css`
-                width: 20px;
-                height: 20px;
-              `;
-            case cartType.page:
-              return css`
-                width: 35px;
-                height: 35px;
-              `;
-            default:
-              return;
-          }
-        }}
-
-        ${() => {
-          if (props.active)
-            return css`
-              outline: 1px solid #5ece7b;
-            `;
-        }}
+        outline: 1px solid #5ece7b;
       `;
   }}
 `;

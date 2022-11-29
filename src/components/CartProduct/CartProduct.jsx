@@ -9,6 +9,8 @@ import { selectActiveCurrency } from 'redux/selectors';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 
+// components
+import CartProductOptions from './CartProductOptions';
 import {
   ProductItem,
   ProductLeftWrapper,
@@ -18,11 +20,7 @@ import {
   ProductQuantityWrapper,
   ProductQuantityBtn,
   ProductImg,
-  OptionBtn,
-  OptionBtnWrapper,
-  ProductSubtitleOption,
 } from './CartProduct.styled';
-// import ProductOptions from 'components/ProductDescription/ProductOptions';
 
 import sprite from 'img/sprite.svg';
 
@@ -53,8 +51,8 @@ class CartProduct extends PureComponent {
     const { quantity } = this.state;
     const { cartType, product, activeCurrency } = this.props;
 
-    const { name, brand, gallery } = product;
-    //  attributes,
+    const { name, brand, attributes, gallery, optionValues } = product;
+
     const {
       amount,
       currency: { symbol },
@@ -69,22 +67,11 @@ class CartProduct extends PureComponent {
             {symbol}
             {amount}
           </ProductPrice>
-          <ProductSubtitleOption>Size:</ProductSubtitleOption>
-          <OptionBtnWrapper gap={8} marginBot={8}>
-            <OptionBtn large>XS</OptionBtn>
-            <OptionBtn large active>
-              S
-            </OptionBtn>
-            <OptionBtn large>M</OptionBtn>
-            <OptionBtn large>L</OptionBtn>
-          </OptionBtnWrapper>
-          <ProductSubtitleOption>Color:</ProductSubtitleOption>
-          <OptionBtnWrapper gap={8} marginBot={8}>
-            <OptionBtn small bColor="#2B2B2B" active></OptionBtn>
-            <OptionBtn small bColor="#2B2B2B"></OptionBtn>
-            <OptionBtn small bColor="#2B2B2B"></OptionBtn>
-          </OptionBtnWrapper>
-          {/* <ProductOptions cartType={cartType} attributes={attributes} /> */}
+          <CartProductOptions
+            activeOptionValues={optionValues}
+            cartType={cartType}
+            attributes={attributes}
+          />
         </ProductLeftWrapper>
         <ProductRightWrapper gap={8}>
           <ProductQuantityWrapper gap={58}>
