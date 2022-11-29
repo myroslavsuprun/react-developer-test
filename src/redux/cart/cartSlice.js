@@ -23,7 +23,7 @@ export const cartSlice = createSlice({
           products
         );
 
-        matchedProductIndex
+        matchedProductIndex >= 0
           ? state.products.splice(matchedProductIndex, 1)
           : state.products.push(payload);
       },
