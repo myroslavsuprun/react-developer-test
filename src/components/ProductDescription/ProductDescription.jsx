@@ -51,12 +51,16 @@ class ProductDescription extends Component {
   }
 
   handleAddBtnClick = () => {
-    const { addCartProduct, product } = this.props;
     const { optionValues } = this.state;
+    const { addCartProduct } = this.props;
+    const { ...product } = this.props.product;
 
     if (!product.inStock) {
       return;
     }
+
+    delete product.inStock;
+    delete product.description;
 
     addCartProduct({ ...product, optionValues: { ...optionValues } });
   };

@@ -24,20 +24,22 @@ import {
 
 // other
 import sprite from 'img/sprite.svg';
-import {
-  createUniqueIdWithOptionValues,
-  numberWithDividers,
-} from 'js';
-
+import { createUniqueIdWithOptionValues, numberWithDividers } from 'js';
 
 class ProductCard extends PureComponent {
   handleAddBtnClick = e => {
     e.preventDefault();
-    const { addCartProduct, product } = this.props;
+    const { addCartProduct } = this.props;
+    const { ...product } = this.props.product;
 
     if (!product.inStock) {
       return;
     }
+
+    // removing unnecessary data for Redux State
+    delete product.category;
+    delete product.inStock;
+    console.log(product);
 
     addCartProduct({ ...product });
   };
