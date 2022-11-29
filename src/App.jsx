@@ -39,9 +39,7 @@ class App extends Component {
             <Route past={ROUTES.home} element={<SharedLayout />}>
               <Route
                 index
-                element={
-                  <Navigate to={`/${generalProductsCategory}`} replace />
-                }
+                element={<Navigate to={generalProductsCategory} replace />}
               />
               <Route path={ROUTES.cart} element={<Cart />} />
               <Route path={ROUTES.category}>

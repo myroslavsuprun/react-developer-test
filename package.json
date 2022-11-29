@@ -2,7 +2,7 @@
   "name": "react-developer-test",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://myroslavsuprun.github.io/react-developer-test/",
+  "homepage": "https://myroslavsuprun.github.io/react-developer-test",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
