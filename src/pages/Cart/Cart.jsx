@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { clearCart } from 'redux/cart/cartSlice';
 
+// components
 import { CartProduct } from 'components';
 import {
   PageTitle,
@@ -19,6 +20,9 @@ import {
   TotalCountSpan,
   SubmitOrderBtn,
 } from './Cart.styled';
+
+// constants
+import cartType from 'constants/cartType';
 
 class CartPage extends PureComponent {
   handleOrderClick = () => {
@@ -42,7 +46,11 @@ class CartPage extends PureComponent {
         <PageTitle>Cart</PageTitle>
         <ProductList>
           {products.map(product => (
-            <CartProduct key={product.id} product={product} type="cartPage" />
+            <CartProduct
+              key={product.id}
+              product={product}
+              cartType={cartType.page}
+            />
           ))}
         </ProductList>
         <TotalCountList>

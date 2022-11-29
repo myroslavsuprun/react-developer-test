@@ -23,18 +23,14 @@ class ProductOptions extends PureComponent {
   };
 
   render() {
-    const { attributes, type: btnStyleType, activeOptionBtns } = this.props;
+    const { attributes, activeOptionBtns } = this.props;
 
     return (
       <>
         {attributes.map(({ id, name, type, items }) => (
           <Fragment key={id}>
-            <OptionTitle pageStyleType={btnStyleType}>{name}</OptionTitle>
-            <OptionBtnWrapper
-              pageStyleType={btnStyleType}
-              type={type}
-              marginB={btnStyleType ? 16 : 24}
-            >
+            <OptionTitle>{name}</OptionTitle>
+            <OptionBtnWrapper type={type} marginB={24}>
               {items.map(({ displayValue, id, value }) => {
                 const activeOptionBtn =
                   activeOptionBtns[createOptionIdState(name)];
@@ -45,7 +41,6 @@ class ProductOptions extends PureComponent {
                   case 'text':
                     return (
                       <OptionTextBtn
-                        pageStyleType={btnStyleType}
                         onClick={() => this.handleOptionClick(name, id)}
                         key={id}
                         active={ifActive}
@@ -57,7 +52,6 @@ class ProductOptions extends PureComponent {
                   case 'swatch':
                     return (
                       <OptionSwatchBtn
-                        pageStyleType={btnStyleType}
                         onClick={() => this.handleOptionClick(name, id)}
                         key={id}
                         active={ifActive}
@@ -79,7 +73,6 @@ class ProductOptions extends PureComponent {
 }
 
 ProductOptions.propTypes = {
-  type: PropTypes.oneOf(['cartPage', 'cartOverlay']),
   attributes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

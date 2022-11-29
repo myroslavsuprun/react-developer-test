@@ -22,7 +22,10 @@ import {
   CartOverlayLink,
   CartOverlayBtn,
 } from './CartOverlay.styled';
+
+// constants
 import ROUTES from 'constants/routes';
+import cartType from 'constants/cartType';
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -87,7 +90,7 @@ class CartOverlay extends Component {
               <CartProduct
                 key={product.id}
                 product={product}
-                type="cartOverlay"
+                cartType={cartType.overlay}
               />
             ))}
           </ProductList>

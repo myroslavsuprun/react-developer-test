@@ -18,6 +18,9 @@ import {
   ProductQuantityWrapper,
   ProductQuantityBtn,
   ProductImg,
+  OptionBtn,
+  OptionBtnWrapper,
+  ProductSubtitleOption,
 } from './CartProduct.styled';
 // import ProductOptions from 'components/ProductDescription/ProductOptions';
 
@@ -48,18 +51,17 @@ class CartProduct extends PureComponent {
 
   render() {
     const { quantity } = this.state;
-    const { type, product, activeCurrency } = this.props;
+    const { cartType, product, activeCurrency } = this.props;
 
     const { name, brand, gallery } = product;
     //  attributes,
-    // Setting memoized currency, so it wouldn't iterate on each render
     const {
       amount,
       currency: { symbol },
     } = activeCurrency;
 
     return (
-      <ProductItem type={type}>
+      <ProductItem cartType={cartType}>
         <ProductLeftWrapper>
           <ProductTitle>{name}</ProductTitle>
           <ProductTitle as="p">{brand}</ProductTitle>
@@ -67,7 +69,22 @@ class CartProduct extends PureComponent {
             {symbol}
             {amount}
           </ProductPrice>
-          {/* <ProductOptions type={type} attributes={attributes} /> */}
+          <ProductSubtitleOption>Size:</ProductSubtitleOption>
+          <OptionBtnWrapper gap={8} marginBot={8}>
+            <OptionBtn large>XS</OptionBtn>
+            <OptionBtn large active>
+              S
+            </OptionBtn>
+            <OptionBtn large>M</OptionBtn>
+            <OptionBtn large>L</OptionBtn>
+          </OptionBtnWrapper>
+          <ProductSubtitleOption>Color:</ProductSubtitleOption>
+          <OptionBtnWrapper gap={8} marginBot={8}>
+            <OptionBtn small bColor="#2B2B2B" active></OptionBtn>
+            <OptionBtn small bColor="#2B2B2B"></OptionBtn>
+            <OptionBtn small bColor="#2B2B2B"></OptionBtn>
+          </OptionBtnWrapper>
+          {/* <ProductOptions cartType={cartType} attributes={attributes} /> */}
         </ProductLeftWrapper>
         <ProductRightWrapper gap={8}>
           <ProductQuantityWrapper gap={58}>
@@ -99,7 +116,7 @@ class CartProduct extends PureComponent {
 }
 
 CartProduct.propTypes = {
-  type: PropTypes.string.isRequired,
+  cartType: PropTypes.string.isRequired,
   product: PropTypes.shape({
     name: PropTypes.string.isRequired,
     brand: PropTypes.string.isRequired,
