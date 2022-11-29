@@ -39,7 +39,6 @@ class ProductCard extends PureComponent {
     // removing unnecessary data for Redux State
     delete product.category;
     delete product.inStock;
-    console.log(product);
 
     addCartProduct({ ...product });
   };
