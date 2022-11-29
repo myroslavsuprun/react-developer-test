@@ -8,7 +8,7 @@ import { withActiveCurrency, withIfProductInCart } from 'hoc';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
-import { addCartProduct } from 'redux/cart/cartSlice';
+import { addCartProduct, removeCartProductById } from 'redux/cart/cartSlice';
 
 // Components
 import {
@@ -24,10 +24,14 @@ import {
 
 // other
 import sprite from 'img/sprite.svg';
-import { numberWithDividers } from 'js';
+import {
+  createUniqueIdWithOptionValues,
+  numberWithDividers,
+} from 'js';
+
 
 class ProductCard extends PureComponent {
-  handleAddToCartClick = e => {
+  handleAddBtnClick = e => {
     e.preventDefault();
     const { addCartProduct, product } = this.props;
 
@@ -35,7 +39,26 @@ class ProductCard extends PureComponent {
       return;
     }
 
-    addCartProduct(product);
+    addCartProduct({ ...product });
+  };
+
+  handleRemoveBtnClick = e => {
+    e.preventDefault();
+
+    const { removeCartProductById, product } = this.props;
+
+    if (!product.inStock) {
+      return;
+    }
+    const { attributes, optionValues, id } = product;
+
+    const productId = createUniqueIdWithOptionValues({
+      attributes,
+      optionValues,
+      id,
+    });
+
+    removeCartProductById(productId);
   };
 
   render() {
@@ -55,7 +78,11 @@ class ProductCard extends PureComponent {
             <ProductImg src={gallery[0]} alt={name} />
             <ProductSoldOut>OUT OF STOCK</ProductSoldOut>
             <ProductItemButton
-              onClick={this.handleAddToCartClick}
+              onClick={
+                ifProductInCart
+                  ? this.handleRemoveBtnClick
+                  : this.handleAddBtnClick
+              }
               aria-label={ifProductInCart ? 'Remove from cart' : 'Add to cart'}
               type="button"
               ifProductInCart={ifProductInCart}
@@ -106,6 +133,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addCartProduct,
+  removeCartProductById,
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);

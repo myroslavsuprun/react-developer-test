@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import memoize from 'memoize-one';
 
-import { createDefaultOptionValues, createProductIdWithOptionValues } from 'js';
+import { createUniqueIdWithOptionValues } from 'js';
 
 export const withIfProductInCart = Component => {
   return class extends PureComponent {
@@ -12,15 +12,14 @@ export const withIfProductInCart = Component => {
     render() {
       const {
         cartProducts,
-        product: { id, attributes },
+        product: { id, attributes, optionValues },
       } = this.props;
 
-      const optionValues = createDefaultOptionValues(attributes);
-      const optionValuesArray = Object.values(optionValues);
-      const idWithOptionValues = createProductIdWithOptionValues(
+      const idWithOptionValues = createUniqueIdWithOptionValues({
         id,
-        optionValuesArray
-      );
+        attributes,
+        optionValues,
+      });
 
       const ifProductInCart = this.memoizedIfInCardValue(
         cartProducts,

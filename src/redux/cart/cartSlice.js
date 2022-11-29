@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { createProductIdWithOptionValues, createDefaultOptionValues } from 'js';
+import { createDefaultOptionValues, createUniqueIdWithOptionValues } from 'js';
 
 const findMatchingProductIndex = (idToCheck, products) =>
   products.findIndex(({ id }) => id === idToCheck);
@@ -15,20 +15,10 @@ export const cartSlice = createSlice({
   reducers: {
     addCartProduct: {
       reducer(state, { payload }) {
-        const { products } = state;
-
-        // Looking for product matching ID with options
-        const matchedProductIndex = findMatchingProductIndex(
-          payload.id,
-          products
-        );
-
-        matchedProductIndex >= 0
-          ? state.products.splice(matchedProductIndex, 1)
-          : state.products.push(payload);
+        state.products.push(payload);
       },
       prepare(payload) {
-        // If we update our product cart from PLP, then we have to set default options
+        // If we update our product cart from PLP, then we have to set default options and add the to payload;
         if (!payload.optionValues) {
           const { attributes } = payload;
 
@@ -37,20 +27,26 @@ export const cartSlice = createSlice({
           payload = { ...payload, optionValues: { ...optionValues } };
         }
 
-        // Setting unique id for our product
-        const { optionValues } = payload;
+        const { optionValues, id } = payload;
 
-        const optionValuesArray = Object.values(optionValues);
-        payload.id = createProductIdWithOptionValues(
-          payload.id,
-          optionValuesArray
-        );
+        payload.id = createUniqueIdWithOptionValues({ optionValues, id });
 
-        // Setting default quantity 1 for our cart product
+        // Setting default quantity 1 for our new cart product
         return { payload: { ...payload, quantity: 1 } };
       },
     },
-    clearCart: state => {
+    removeCartProductById: (state, { payload }) => {
+      const { products } = state;
+
+      // Looking for product matching ID with options
+      const matchedProductIndex = findMatchingProductIndex(
+        payload.id,
+        products
+      );
+
+      state.products.splice(matchedProductIndex, 1);
+    },
+    removeCartProducts: state => {
       state.products = [];
     },
     incrementProductQuantityById: (state, { payload }) => {
@@ -76,7 +72,8 @@ export const cartSlice = createSlice({
 
 export const {
   addCartProduct,
-  clearCart,
+  removeCartProductById,
+  removeCartProducts,
   incrementProductQuantityById,
   decrementProductQuantityById,
 } = cartSlice.actions;

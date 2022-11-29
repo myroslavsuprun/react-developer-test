@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 // redux
 import { compose } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
-import { clearCart } from 'redux/cart/cartSlice';
+import { removeCartProducts } from 'redux/cart/cartSlice';
 import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 
 import { CartProduct } from 'components';
@@ -64,9 +64,9 @@ class CartOverlay extends Component {
   };
 
   handleCheckoutClick = () => {
-    const { clearCart } = this.props;
+    const { removeCartProducts } = this.props;
 
-    clearCart();
+    removeCartProducts();
   };
 
   render() {
@@ -135,7 +135,7 @@ CartOverlay.propTypes = {
     symbol: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   }),
-  clearCart: PropTypes.func.isRequired,
+  removeCartProducts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -146,7 +146,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  clearCart,
+  removeCartProducts,
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);

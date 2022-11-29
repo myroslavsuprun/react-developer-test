@@ -8,7 +8,7 @@ import { withUpdateTitle } from 'hoc';
 import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
-import { clearCart } from 'redux/cart/cartSlice';
+import { removeCartProducts } from 'redux/cart/cartSlice';
 
 // components
 import { CartProduct } from 'components';
@@ -27,9 +27,9 @@ import cartType from 'constants/cartType';
 
 class CartPage extends PureComponent {
   handleOrderClick = () => {
-    const { clearCart } = this.props;
+    const { removeCartProducts } = this.props;
 
-    clearCart();
+    removeCartProducts();
   };
 
   render() {
@@ -77,7 +77,7 @@ CartPage.propTypes = {
     symbol: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   }),
-  clearCart: PropTypes.func.isRequired,
+  removeCartProducts: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -88,7 +88,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  clearCart,
+  removeCartProducts,
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);

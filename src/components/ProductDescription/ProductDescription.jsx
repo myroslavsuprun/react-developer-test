@@ -7,7 +7,7 @@ import memoize from 'memoize-one';
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
-import { addCartProduct } from 'redux/cart/cartSlice';
+import { removeCartProductById, addCartProduct } from 'redux/cart/cartSlice';
 
 // hoc
 import { withActiveCurrency } from 'hoc';
@@ -26,7 +26,7 @@ import {
 import {
   numberWithDividers,
   createDefaultOptionValues,
-  createProductIdWithOptionValues,
+  createUniqueIdWithOptionValues,
 } from 'js';
 
 class ProductDescription extends Component {
@@ -50,7 +50,7 @@ class ProductDescription extends Component {
     });
   }
 
-  handleAddProductClick = () => {
+  handleAddBtnClick = () => {
     const { addCartProduct, product } = this.props;
     const { optionValues } = this.state;
 
@@ -59,6 +59,25 @@ class ProductDescription extends Component {
     }
 
     addCartProduct({ ...product, optionValues: { ...optionValues } });
+  };
+
+  handleRemoveBtnClick = e => {
+    e.preventDefault();
+
+    const { removeCartProductById, product } = this.props;
+
+    if (!product.inStock) {
+      return;
+    }
+    const { optionValues } = this.state;
+    const { id } = product;
+
+    const productId = createUniqueIdWithOptionValues({
+      id,
+      optionValues,
+    });
+
+    removeCartProductById(productId);
   };
 
   handleOptionAddition = optionUpdate => {
@@ -77,11 +96,10 @@ class ProductDescription extends Component {
 
     const { brand, description, inStock, attributes, name, id } = product;
 
-    const optionValuesArray = Object.values(optionValues);
-    const idWithOptionValues = createProductIdWithOptionValues(
+    const idWithOptionValues = createUniqueIdWithOptionValues({
       id,
-      optionValuesArray
-    );
+      optionValues,
+    });
 
     const ifProductInCart = this.memoizedIfInCardValue(
       cartProducts,
@@ -115,7 +133,9 @@ class ProductDescription extends Component {
         </ProductPrice>
         <BtnAddition
           type="button"
-          onClick={this.handleAddProductClick}
+          onClick={
+            ifProductInCart ? this.handleRemoveBtnClick : this.handleAddBtnClick
+          }
           disapled={!inStock}
           inStock={inStock}
         >
@@ -177,6 +197,7 @@ const mapStateToProps = state => {
 
 const mapDispathcToProps = {
   addCartProduct,
+  removeCartProductById,
 };
 
 const enhance = connect(mapStateToProps, mapDispathcToProps);
