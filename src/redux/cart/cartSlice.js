@@ -2,6 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { createProductIdWithOptionValues, createDefaultOptionValues } from 'js';
 
+const findMatchingProductIndex = (idToCheck, products) =>
+  products.findIndex(({ id }) => id === idToCheck);
+
 const initialState = {
   products: [],
 };
@@ -14,33 +17,15 @@ export const cartSlice = createSlice({
       reducer(state, { payload }) {
         const { products } = state;
 
-        // Looking for products with the same ID
-        const matchedProductsIndex = products.reduce((acc, { id }, index) => {
-          if (id === payload.id) {
-            return [...acc, index];
-          }
+        // Looking for product matching ID with options
+        const matchedProductIndex = findMatchingProductIndex(
+          payload.id,
+          products
+        );
 
-          return [...acc];
-        }, []);
-
-        if (matchedProductsIndex.length >= 1) {
-          for (const index of matchedProductsIndex) {
-            const { optionValues } = products[index];
-            const { optionValues: payloadOptionValues } = payload;
-            const optionValuesKeys = Object.keys(optionValues);
-
-            const ifOptionsSame = optionValuesKeys.every(
-              key => optionValues[key] === payloadOptionValues[key]
-            );
-
-            if (ifOptionsSame) {
-              state.products.splice(index, 1);
-              return;
-            }
-          }
-        }
-
-        state.products.push(payload);
+        matchedProductIndex
+          ? state.products.splice(matchedProductIndex, 1)
+          : state.products.push(payload);
       },
       prepare(payload) {
         // If we update our product cart from PLP, then we have to set default options
@@ -71,26 +56,26 @@ export const cartSlice = createSlice({
     incrementProductQuantityById: (state, { payload }) => {
       const { products } = state;
 
-      const matchedProductIndex = products.findIndex(
-        ({ id }) => payload === id
+      const matchedProductIndex = findMatchingProductIndex(
+        payload.id,
+        products
       );
+      const matchedProduct = products[matchedProductIndex];
 
-      products[matchedProductIndex].quantity += 1;
+      matchedProduct.quantity += 1;
     },
     decrementProductQuantityById: (state, { payload }) => {
       const { products } = state;
 
-      const matchedProductIndex = products.findIndex(
-        ({ id }) => payload === id
+      const matchedProductIndex = findMatchingProductIndex(
+        payload.id,
+        products
       );
       const matchedProduct = products[matchedProductIndex];
 
-      if (matchedProduct.quantity <= 1) {
-        products.splice(matchedProductIndex, 1);
-        return;
-      }
-
-      matchedProduct.quantity -= 1;
+      matchedProduct.quantity <= 1
+        ? products.splice(matchedProductIndex, 1)
+        : (matchedProduct.quantity -= 1);
     },
   },
 });
