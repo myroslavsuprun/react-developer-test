@@ -42,7 +42,7 @@ class ProductCard extends PureComponent {
   render() {
     const { product, activeCurrency, ifProductInCart } = this.props;
 
-    const { inStock, gallery, name, id, category } = product;
+    const { inStock, gallery, name, id, category, brand } = product;
 
     const {
       amount,
@@ -66,7 +66,9 @@ class ProductCard extends PureComponent {
               </svg>
             </ProductItemButton>
           </ProductImgWrapper>
-          <ProductName>{name}</ProductName>
+          <ProductName>
+            {brand} {name}
+          </ProductName>
           <ProductPrice>
             {symbol}
             {numberWithDividers(amount)}

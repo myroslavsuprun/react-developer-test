@@ -108,12 +108,14 @@ export const CartOverlayBtn = styled.button`
   text-transform: uppercase;
   text-decoration: none;
 
-  transition: background-color 250ms linear, color 250ms linear;
+  transition: background-color 200ms linear, color 200ms linear,
+    border 200ms linear;
   cursor: pointer;
 
   &:hover {
     background-color: #5ece7b;
     color: #fff;
+    border: none;
   }
 `;
 
