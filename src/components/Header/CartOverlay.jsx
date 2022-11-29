@@ -86,13 +86,17 @@ class CartOverlay extends Component {
             My bag, <CartOverlayTitleSpan>3 items</CartOverlayTitleSpan>
           </CartOverlayTitle>
           <ProductList>
-            {products.map(product => (
-              <CartProduct
-                key={product.id}
-                product={product}
-                cartType={cartType.overlay}
-              />
-            ))}
+            {products.length === 0 ? (
+              <p>The cart is empty</p>
+            ) : (
+              products.map(product => (
+                <CartProduct
+                  key={product.id}
+                  product={product}
+                  cartType={cartType.overlay}
+                />
+              ))
+            )}
           </ProductList>
           <TotalCountWrapper>
             <TotalCountP fw={500}>Total</TotalCountP>
