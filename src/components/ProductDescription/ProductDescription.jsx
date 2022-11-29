@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 // redux
 import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
-import { selectActiveCurrency } from 'redux/selectors';
+import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 import { addCartProduct } from 'redux/cart/cartSlice';
 
 // hoc
-import { withActiveCurrency } from 'hoc';
+import { withActiveCurrency, withIfProductInCart } from 'hoc';
 
 import {
   DescriptionSection,
@@ -70,7 +70,7 @@ class ProductDescription extends Component {
 
   render() {
     const { optionValues } = this.state;
-    const { product, activeCurrency } = this.props;
+    const { product, activeCurrency, ifProductInCart } = this.props;
 
     const { brand, description, inStock, attributes, name } = product;
 
@@ -78,6 +78,10 @@ class ProductDescription extends Component {
       amount,
       currency: { symbol },
     } = activeCurrency;
+
+    const btnTextIfInStock = ifProductInCart
+      ? 'Remove from cart'
+      : 'Add to cart';
 
     return (
       <DescriptionSection>
@@ -101,7 +105,7 @@ class ProductDescription extends Component {
           disapled={!inStock}
           inStock={inStock}
         >
-          {inStock ? 'Add to cart' : 'Out of stock'}
+          {inStock ? btnTextIfInStock : 'Out of stock'}
         </BtnAddition>
         <ProductDescriptionStyled>
           <Markup content={description} />
@@ -152,8 +156,9 @@ ProductDescription.propTypes = {
 
 const mapStateToProps = state => {
   const activeCurrency = selectActiveCurrency(state);
+  const cartProducts = selectCartProducts(state);
 
-  return { activeCurrency };
+  return { activeCurrency, cartProducts };
 };
 
 const mapDispathcToProps = {
@@ -162,4 +167,8 @@ const mapDispathcToProps = {
 
 const enhance = connect(mapStateToProps, mapDispathcToProps);
 
-export default compose(enhance, withActiveCurrency)(ProductDescription);
+export default compose(
+  enhance,
+  withActiveCurrency,
+  withIfProductInCart
+)(ProductDescription);

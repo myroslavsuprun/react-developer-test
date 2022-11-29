@@ -37,9 +37,13 @@ export const ProductPrice = styled.p`
 `;
 
 export const BtnAddition = styled.button`
-  padding: 16px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 40px;
+
   min-width: 292px;
+  min-height: 52px;
 
   border: none;
   background-color: #5ece7b;

@@ -18,7 +18,8 @@ export const ProductItemButton = styled.button`
   right: 15px;
   border-radius: 50%;
   border: none;
-  background-color: #5ece7b;
+  background-color: ${({ ifProductInCart }) =>
+    ifProductInCart ? '#EA8120' : '#5ece7b'};
 `;
 
 export const ProductItem = styled.li`

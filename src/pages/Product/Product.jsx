@@ -1,13 +1,18 @@
 import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+// hoc
+import { withGetProductById } from 'hoc';
+
+// redux
+import { compose } from '@reduxjs/toolkit';
+
 // components
 import { Error, Loader, ProductDescription, ProductImages } from 'components';
 import { GridContainer } from './Product.styled';
 
+// constants
 import { shopTitle } from 'constants/shopTitle';
-import { withGetProductById } from 'hoc';
-import { compose } from '@reduxjs/toolkit';
 
 class Product extends PureComponent {
   componentDidUpdate() {
