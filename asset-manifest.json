@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/react-developer-test/static/css/main.f43f0aba.css",
-    "main.js": "/react-developer-test/static/js/main.c5bd998c.js",
-    "static/js/174.1071326f.chunk.js": "/react-developer-test/static/js/174.1071326f.chunk.js",
-    "static/js/584.a615f5c6.chunk.js": "/react-developer-test/static/js/584.a615f5c6.chunk.js",
-    "static/js/234.fba8627e.chunk.js": "/react-developer-test/static/js/234.fba8627e.chunk.js",
+    "main.js": "/react-developer-test/static/js/main.c0285a00.js",
+    "static/js/174.3c5978e7.chunk.js": "/react-developer-test/static/js/174.3c5978e7.chunk.js",
+    "static/js/584.839779d3.chunk.js": "/react-developer-test/static/js/584.839779d3.chunk.js",
+    "static/js/234.834ca8e2.chunk.js": "/react-developer-test/static/js/234.834ca8e2.chunk.js",
     "static/media/sprite.svg": "/react-developer-test/static/media/sprite.f995b05d5697101725386da8e5b641a0.svg",
     "index.html": "/react-developer-test/index.html",
     "main.f43f0aba.css.map": "/react-developer-test/static/css/main.f43f0aba.css.map",
-    "main.c5bd998c.js.map": "/react-developer-test/static/js/main.c5bd998c.js.map",
-    "174.1071326f.chunk.js.map": "/react-developer-test/static/js/174.1071326f.chunk.js.map",
-    "584.a615f5c6.chunk.js.map": "/react-developer-test/static/js/584.a615f5c6.chunk.js.map",
-    "234.fba8627e.chunk.js.map": "/react-developer-test/static/js/234.fba8627e.chunk.js.map"
+    "main.c0285a00.js.map": "/react-developer-test/static/js/main.c0285a00.js.map",
+    "174.3c5978e7.chunk.js.map": "/react-developer-test/static/js/174.3c5978e7.chunk.js.map",
+    "584.839779d3.chunk.js.map": "/react-developer-test/static/js/584.839779d3.chunk.js.map",
+    "234.834ca8e2.chunk.js.map": "/react-developer-test/static/js/234.834ca8e2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f43f0aba.css",
-    "static/js/main.c5bd998c.js"
+    "static/js/main.c0285a00.js"
   ]
 }
