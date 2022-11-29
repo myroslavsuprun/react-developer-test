@@ -56,10 +56,7 @@ export const cartSlice = createSlice({
     incrementProductQuantityById: (state, { payload }) => {
       const { products } = state;
 
-      const matchedProductIndex = findMatchingProductIndex(
-        payload.id,
-        products
-      );
+      const matchedProductIndex = findMatchingProductIndex(payload, products);
       const matchedProduct = products[matchedProductIndex];
 
       matchedProduct.quantity += 1;
@@ -67,10 +64,7 @@ export const cartSlice = createSlice({
     decrementProductQuantityById: (state, { payload }) => {
       const { products } = state;
 
-      const matchedProductIndex = findMatchingProductIndex(
-        payload.id,
-        products
-      );
+      const matchedProductIndex = findMatchingProductIndex(payload, products);
       const matchedProduct = products[matchedProductIndex];
 
       matchedProduct.quantity <= 1
