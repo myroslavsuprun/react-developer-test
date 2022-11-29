@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <HashRouter basename="/react-developer-test">
+    <HashRouter>
       <Provider store={store}>
         <PersistGate loading={<Loader />} persistor={persistor}>
           <App />
