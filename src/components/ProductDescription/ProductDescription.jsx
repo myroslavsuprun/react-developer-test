@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { Markup } from 'interweave';
 import PropTypes from 'prop-types';
-import memoize from 'memoize-one';
 
 // redux
 import { connect } from 'react-redux';
@@ -28,6 +27,7 @@ import {
   numberWithDividers,
   createDefaultOptionValues,
   createUniqueIdWithOptionValues,
+  memoizeIfInCardValue,
 } from 'js';
 
 class ProductDescription extends Component {
@@ -92,10 +92,6 @@ class ProductDescription extends Component {
     }));
   };
 
-  memoizedIfInCardValue = memoize((cartProducts, id) =>
-    cartProducts.some(cartProduct => cartProduct.id === id)
-  );
-
   render() {
     const { optionValues } = this.state;
     const { product, activeCurrency, cartProducts } = this.props;
@@ -107,7 +103,7 @@ class ProductDescription extends Component {
       optionValues,
     });
 
-    const ifProductInCart = this.memoizedIfInCardValue(
+    const ifProductInCart = memoizeIfInCardValue(
       cartProducts,
       idWithOptionValues
     );
