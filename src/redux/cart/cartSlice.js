@@ -39,10 +39,7 @@ export const cartSlice = createSlice({
       const { products } = state;
 
       // Looking for product matching ID with options
-      const matchedProductIndex = findMatchingProductIndex(
-        payload.id,
-        products
-      );
+      const matchedProductIndex = findMatchingProductIndex(payload, products);
 
       state.products.splice(matchedProductIndex, 1);
     },

@@ -43,7 +43,13 @@ export const cartTotalSlice = createSlice({
 
       cartTotal.totalQuantity -= quantity;
 
-      cartTotal.prices = countTotalPrices(cartTotal.prices, prices, false);
+      const isIncrement = false;
+
+      cartTotal.prices = countTotalPrices(
+        cartTotal.prices,
+        prices,
+        isIncrement
+      );
     },
     updateCartTotalIfAdded: (state, { payload }) => {
       const { cartTotal } = state;
@@ -51,7 +57,7 @@ export const cartTotalSlice = createSlice({
 
       cartTotal.totalQuantity += quantity;
 
-      cartTotal.prices = countTotalPrices(cartTotal.prices, prices, true);
+      cartTotal.prices = countTotalPrices(cartTotal.prices, prices);
     },
   },
   extraReducers: builder => {
@@ -74,7 +80,7 @@ export const cartTotalSlice = createSlice({
           };
         });
       } else {
-        cartTotal.prices = countTotalPrices(cartTotal.prices, prices, true);
+        cartTotal.prices = countTotalPrices(cartTotal.prices, prices);
       }
 
       cartTotal.totalQuantity += quantity;

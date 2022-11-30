@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import { Markup } from 'interweave';
 import PropTypes from 'prop-types';
 
@@ -30,9 +30,9 @@ import {
   memoizeIfInCardValue,
 } from 'js';
 
-class ProductDescription extends Component {
+class ProductDescription extends PureComponent {
   state = {
-    optionValues: {},
+    optionValues: null,
   };
 
   componentDidMount() {
@@ -95,6 +95,10 @@ class ProductDescription extends Component {
   render() {
     const { optionValues } = this.state;
     const { product, activeCurrency, cartProducts } = this.props;
+
+    if (!optionValues) {
+      return;
+    }
 
     const { brand, description, inStock, attributes, name, id } = product;
 
