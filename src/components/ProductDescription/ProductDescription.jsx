@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 import { removeCartProductById, addCartProduct } from 'redux/cart/cartSlice';
+import { updateCartTotalIfRemoved } from 'redux/cartTotal/cartTotalSlice';
 
 // hoc
 import { withActiveCurrency } from 'hoc';
@@ -65,16 +66,16 @@ class ProductDescription extends Component {
     addCartProduct({ ...product, optionValues: { ...optionValues } });
   };
 
-  handleRemoveBtnClick = e => {
-    e.preventDefault();
-
-    const { removeCartProductById, product } = this.props;
+  handleRemoveBtnClick = () => {
+    const { removeCartProductById, product, updateCartTotalIfRemoved } =
+      this.props;
 
     if (!product.inStock) {
       return;
     }
+
     const { optionValues } = this.state;
-    const { id } = product;
+    const { id, prices } = product;
 
     const productId = createUniqueIdWithOptionValues({
       id,
@@ -82,6 +83,7 @@ class ProductDescription extends Component {
     });
 
     removeCartProductById(productId);
+    updateCartTotalIfRemoved({ prices });
   };
 
   handleOptionAddition = optionUpdate => {
@@ -154,6 +156,11 @@ class ProductDescription extends Component {
 }
 
 ProductDescription.propTypes = {
+  cartProducts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    })
+  ),
   addCartProduct: PropTypes.func.isRequired,
   activeCurrency: PropTypes.shape({
     amount: PropTypes.number.isRequired,
@@ -190,6 +197,8 @@ ProductDescription.propTypes = {
       })
     ),
   }),
+  updateCartTotalIfRemoved: PropTypes.func.isRequired,
+  removeCartProductById: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -201,6 +210,7 @@ const mapStateToProps = state => {
 
 const mapDispathcToProps = {
   addCartProduct,
+  updateCartTotalIfRemoved,
   removeCartProductById,
 };
 

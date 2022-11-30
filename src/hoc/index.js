@@ -5,3 +5,4 @@ export * from './withGetProductById';
 export * from './withUpdateTitle';
 export * from './withActiveCurrency';
 export * from './withIfProductInCart';
+export * from './withActiveCartTotal';

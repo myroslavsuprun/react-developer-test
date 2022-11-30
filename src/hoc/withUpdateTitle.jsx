@@ -1,8 +1,8 @@
+import { PureComponent } from 'react';
 import { shopTitle } from 'constants/shopTitle';
-import { Component } from 'react';
 
-export const withUpdateTitle = (WrappedComponent, title) => {
-  return class extends Component {
+export const withUpdateTitle = (Component, title) => {
+  return class extends PureComponent {
     defaultValues = {
       title: 'Home',
     };
@@ -12,7 +12,7 @@ export const withUpdateTitle = (WrappedComponent, title) => {
     }
 
     render() {
-      return <WrappedComponent {...this.props} />;
+      return <Component {...this.props} />;
     }
   };
 };

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
 import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
 import { addCartProduct, removeCartProductById } from 'redux/cart/cartSlice';
+import { updateCartTotalIfRemoved } from 'redux/cartTotal/cartTotalSlice';
 
 // Components
 import {
@@ -46,12 +47,13 @@ class ProductCard extends PureComponent {
   handleRemoveBtnClick = e => {
     e.preventDefault();
 
-    const { removeCartProductById, product } = this.props;
+    const { removeCartProductById, product, updateCartTotalIfRemoved } =
+      this.props;
 
     if (!product.inStock) {
       return;
     }
-    const { attributes, optionValues, id } = product;
+    const { attributes, optionValues, id, prices } = product;
 
     const productId = createUniqueIdWithOptionValues({
       attributes,
@@ -59,6 +61,7 @@ class ProductCard extends PureComponent {
       id,
     });
 
+    updateCartTotalIfRemoved({ prices });
     removeCartProductById(productId);
   };
 
@@ -123,6 +126,7 @@ ProductCard.propTypes = {
     id: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
   }),
+  updateCartTotalIfRemoved: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -135,6 +139,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   addCartProduct,
   removeCartProductById,
+  updateCartTotalIfRemoved,
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);

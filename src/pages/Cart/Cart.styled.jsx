@@ -1,4 +1,4 @@
-// import { css } from 'styled-components';
+import { css } from 'styled-components';
 import styled from 'styled-components';
 
 export const PageTitle = styled.h1`
@@ -50,11 +50,21 @@ export const TotalCountSpan = styled.span`
 export const SubmitOrderBtn = styled.button`
   padding: 13px 114px;
 
-  background-color: #5ece7b;
   color: #fff;
   border: none;
 
   text-transform: uppercase;
 
-  cursor: pointer;
+  ${({ disabled }) => {
+    if (disabled) {
+      return css`
+        background-color: #34ab53;
+      `;
+    }
+
+    return css`
+      background-color: #5ec071;
+      cursor: pointer;
+    `;
+  }};
 `;

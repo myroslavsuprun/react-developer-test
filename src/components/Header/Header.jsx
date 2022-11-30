@@ -2,10 +2,12 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // hoc
-import { withGetCategories, withUseParams } from 'hoc';
+import { withGetCategories, withUseParams, withActiveCartTotal } from 'hoc';
 
 // redux
+import { connect } from 'react-redux';
 import { compose } from '@reduxjs/toolkit';
+import { selectActiveCurrency, selectCartTotal } from 'redux/selectors';
 
 // components
 import { CurrencySwitcher, CartOverlay } from 'components/Header';
@@ -48,12 +50,14 @@ class Header extends Component {
 
   render() {
     const { ifOverlayOpen, ifCurrencyOpen } = this.state;
-    const { categoriesQueryStatus, params } = this.props;
+    const { categoriesQueryStatus, params, activeCartTotal } = this.props;
     const { data, isSuccess } = categoriesQueryStatus;
     const { categoryId } = params;
 
     if (isSuccess) {
       const { categories } = data;
+
+      const { totalQuantity } = activeCartTotal;
 
       return (
         <>
@@ -88,7 +92,9 @@ class Header extends Component {
                   <svg width="26" height="26" fill="#1D1F22">
                     <use href={`${sprite}#icon-cart`}></use>
                   </svg>
-                  {true && <CartNotification>8</CartNotification>}
+                  {Boolean(totalQuantity) && (
+                    <CartNotification>{totalQuantity}</CartNotification>
+                  )}
                 </OptionItem>
               </OptionList>
             </HeaderContainer>
@@ -106,6 +112,23 @@ class Header extends Component {
 Header.propTypes = {
   params: PropTypes.object.isRequired,
   categoriesQueryStatus: PropTypes.object.isRequired,
+  activeCartTotal: PropTypes.shape({
+    totalQuantity: PropTypes.number.isRequired,
+  }),
 };
 
-export default compose(withGetCategories, withUseParams)(Header);
+const mapStateToProps = state => {
+  const cartTotal = selectCartTotal(state);
+  const activeCurrency = selectActiveCurrency(state);
+
+  return { cartTotal, activeCurrency };
+};
+
+const enhance = connect(mapStateToProps);
+
+export default compose(
+  enhance,
+  withGetCategories,
+  withUseParams,
+  withActiveCartTotal
+)(Header);

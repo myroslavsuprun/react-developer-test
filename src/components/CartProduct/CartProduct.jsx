@@ -12,6 +12,10 @@ import {
   incrementProductQuantityById,
   decrementProductQuantityById,
 } from 'redux/cart/cartSlice';
+import {
+  updateCartTotalIfRemoved,
+  updateCartTotalIfAdded,
+} from 'redux/cartTotal/cartTotalSlice';
 
 // components
 import CartProductOptions from './CartProductOptions';
@@ -39,15 +43,20 @@ class CartProduct extends PureComponent {
   };
 
   handleQuantityIncrement = () => {
-    const { incrementProductQuantityById, product } = this.props;
-    const { id } = product;
+    const { incrementProductQuantityById, product, updateCartTotalIfAdded } =
+      this.props;
+    const { id, prices } = product;
 
     incrementProductQuantityById(id);
+    updateCartTotalIfAdded({ prices });
   };
 
   handleQuantityDecrement = () => {
-    const { decrementProductQuantityById, product } = this.props;
-    const { id } = product;
+    const { decrementProductQuantityById, product, updateCartTotalIfRemoved } =
+      this.props;
+    const { id, prices } = product;
+
+    updateCartTotalIfRemoved({ prices });
 
     decrementProductQuantityById(id);
   };
@@ -180,6 +189,8 @@ CartProduct.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   }),
+  updateCartTotalIfRemoved: PropTypes.func.isRequired,
+  updateCartTotalIfAdded: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -191,6 +202,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   incrementProductQuantityById,
   decrementProductQuantityById,
+  updateCartTotalIfRemoved,
+  updateCartTotalIfAdded,
 };
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);

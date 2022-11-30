@@ -1,14 +1,22 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 
 // redux
 import { compose } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
 import { removeCartProducts } from 'redux/cart/cartSlice';
-import { selectActiveCurrency, selectCartProducts } from 'redux/selectors';
+import {
+  selectActiveCurrency,
+  selectCartProducts,
+  selectCartTotal,
+} from 'redux/selectors';
 
+// hoc
+import { withActiveCartTotal } from 'hoc';
+
+// components
+import { NavLink } from 'react-router-dom';
 import { CartProduct } from 'components';
 import {
   CartOverlayBackdrop,
@@ -70,23 +78,20 @@ class CartOverlay extends Component {
   };
 
   render() {
-    const { products } = this.props;
+    const { products, activeCartTotal } = this.props;
+    const { totalQuantity, currency, totalAmount } = activeCartTotal;
 
-    // activeCurrency
-    // Setting memoized currency, so it wouldn't iterate on each render
-    // const {
-    //   amount,
-    //   currency: { symbol },
-    // } = this.memoizedActivePrice(prices, activeCurrency);
+    const ifCartEmpty = !Boolean(totalQuantity);
 
     const component = (
       <CartOverlayBackdrop onClick={this.handleOverlayBackDropClick}>
         <CartOverlayWrapper>
           <CartOverlayTitle>
-            My bag, <CartOverlayTitleSpan>3 items</CartOverlayTitleSpan>
+            My bag,{' '}
+            <CartOverlayTitleSpan>{totalQuantity} item(s)</CartOverlayTitleSpan>
           </CartOverlayTitle>
           <ProductList>
-            {products.length === 0 ? (
+            {ifCartEmpty ? (
               <p>The cart is empty</p>
             ) : (
               products.map(product => (
@@ -99,10 +104,15 @@ class CartOverlay extends Component {
             )}
           </ProductList>
           <TotalCountWrapper>
-            <TotalCountP fw={500}>Total</TotalCountP>
-            <TotalCountP as="span" fw={700}>
-              $200.00
-            </TotalCountP>
+            {!ifCartEmpty && (
+              <>
+                <TotalCountP fw={500}>Total</TotalCountP>
+                <TotalCountP as="span" fw={700}>
+                  {currency.symbol}
+                  {totalAmount.toFixed(2)}
+                </TotalCountP>
+              </>
+            )}
           </TotalCountWrapper>
           <CartOverlayLinkList>
             <li>
@@ -136,13 +146,21 @@ CartOverlay.propTypes = {
     label: PropTypes.string.isRequired,
   }),
   removeCartProducts: PropTypes.func.isRequired,
+  activeCartTotal: PropTypes.shape({
+    currency: PropTypes.shape({
+      symbol: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    }),
+    totalAmount: PropTypes.number,
+  }),
 };
 
 const mapStateToProps = state => {
   const products = selectCartProducts(state);
   const activeCurrency = selectActiveCurrency(state);
+  const cartTotal = selectCartTotal(state);
 
-  return { products, activeCurrency };
+  return { products, activeCurrency, cartTotal };
 };
 
 const mapDispatchToProps = {
@@ -151,4 +169,4 @@ const mapDispatchToProps = {
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(enhance)(CartOverlay);
+export default compose(enhance, withActiveCartTotal)(CartOverlay);
