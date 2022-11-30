@@ -1,8 +1,13 @@
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+
 // hoc
 import { withGetCategories, withUseParams } from 'hoc';
 
+// redux
+import { compose } from '@reduxjs/toolkit';
+
 // components
-import { Component } from 'react';
 import { CurrencySwitcher, CartOverlay } from 'components/Header';
 import {
   HeaderStyled,
@@ -14,13 +19,12 @@ import {
   Logo,
   OptionList,
   OptionItem,
+  CartNotification,
 } from './Header.styled';
 
 // other
-import PropTypes from 'prop-types';
 import sprite from 'img/sprite.svg';
 import ROUTES from 'constants/routes';
-import { compose } from '@reduxjs/toolkit';
 
 class Header extends Component {
   state = {
@@ -84,6 +88,7 @@ class Header extends Component {
                   <svg width="26" height="26" fill="#1D1F22">
                     <use href={`${sprite}#icon-cart`}></use>
                   </svg>
+                  {true && <CartNotification>8</CartNotification>}
                 </OptionItem>
               </OptionList>
             </HeaderContainer>

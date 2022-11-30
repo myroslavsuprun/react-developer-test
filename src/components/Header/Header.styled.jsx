@@ -97,6 +97,12 @@ export const OptionItem = styled.li`
 
   cursor: pointer;
 
+  ${({ cart }) =>
+    cart &&
+    css`
+      position: relative;
+    `}
+
   ${props =>
     props.flex &&
     css`
@@ -104,4 +110,27 @@ export const OptionItem = styled.li`
       align-items: center;
       justify-content: center;
     `}
+`;
+
+export const CartNotification = styled.div`
+  position: absolute;
+  top: -2px;
+  left: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+  background-color: #1d1f22;
+
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  text-transform: uppercase;
+  color: #fff;
 `;
