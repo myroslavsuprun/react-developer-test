@@ -8,17 +8,19 @@ import { withGetProductById } from 'hoc';
 import { compose } from '@reduxjs/toolkit';
 
 // components
+import { Navigate } from 'react-router-dom';
 import { Error, Loader, ProductDescription, ProductImages } from 'components';
 import { GridContainer } from './Product.styled';
 
 // constants
 import { shopTitle } from 'constants/shopTitle';
+import ROUTES from 'constants/routes';
 
 class Product extends PureComponent {
   componentDidUpdate() {
     const { data } = this.props.getProductByIdStatus;
 
-    if (data) {
+    if (data?.product) {
       const { product } = data;
       document.title = `${shopTitle} | ${product.name}`;
     }
@@ -38,6 +40,14 @@ class Product extends PureComponent {
 
     if (isSuccess) {
       const { product } = data;
+
+      // Instead of "/*" route.
+      // If we type any route and do not receive a category match,
+      // then we get redirected to our primary category page.
+      if (!product) {
+        return <Navigate to={ROUTES.home} />;
+      }
+
       const { gallery, name } = product;
 
       return (

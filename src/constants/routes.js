@@ -3,6 +3,7 @@ const ROUTES = Object.freeze({
   cart: '/cart',
   category: ':categoryId',
   product: ':productId',
+  spalts: '/*',
 });
 
 export default ROUTES;

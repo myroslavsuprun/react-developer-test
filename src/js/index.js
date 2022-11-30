@@ -4,3 +4,4 @@ export * from './joinIdWithOptionValuesArray';
 export * from './createDefaultOptionValues';
 export * from './createUniqueIdWithOptionValues';
 export * from './toFixedNumber';
+export * from './capitalizeString';

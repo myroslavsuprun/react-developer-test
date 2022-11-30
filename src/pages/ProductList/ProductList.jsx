@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 // hoc
@@ -9,17 +9,21 @@ import { Navigate } from 'react-router-dom';
 import { Error, Loader, ProductCard } from 'components';
 import { CategoryTitle, ProductListStyled } from './ProductList.styled';
 
+// other
+import { capitalizeString } from 'js';
 import ROUTES from 'constants/routes';
 import { shopTitle } from 'constants/shopTitle';
 
-class ProductList extends Component {
+class ProductList extends PureComponent {
   componentDidUpdate() {
-    const { data } = this.props.getProductsByCategoryStatus;
+    const { getProductsByCategoryStatus } = this.props;
+    const { data } = getProductsByCategoryStatus;
 
-    if (data) {
+    if (data?.category) {
       const { category } = data;
-      const categoryName =
-        category.name.charAt(0).toUpperCase() + category.name.slice(1);
+
+      const categoryName = capitalizeString(category.name);
+
       document.title = `${shopTitle} | ${categoryName}`;
     }
   }
@@ -39,16 +43,15 @@ class ProductList extends Component {
     }
 
     if (isSuccess) {
+      const { category } = data;
       // Instead of "/*" route.
       // If we type any route and do not receive a category match,
       // then we get redirected to our primary category page.
-      if (!data.category) {
-        return <Navigate to={ROUTES.home} replace />;
+      if (!category) {
+        return <Navigate to={ROUTES.home} />;
       }
 
-      const {
-        category: { name, products },
-      } = data;
+      const { name, products } = category;
 
       return (
         <>
