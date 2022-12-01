@@ -27,7 +27,7 @@ export const Nav = styled.nav`
   align-items: center;
 `;
 
-export const LinkList = styled.nav`
+export const LinkList = styled.ul`
   display: flex;
 
   text-transform: uppercase;

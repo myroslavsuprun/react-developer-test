@@ -78,7 +78,7 @@ class Header extends Component {
                   })}
                 </LinkList>
               </Nav>
-              <Logo to={ROUTES.home}>
+              <Logo to={ROUTES.home} aria-label="Shop logotype">
                 <svg width="30" height="30">
                   <use href={`${sprite}#icon-main`}></use>
                 </svg>
