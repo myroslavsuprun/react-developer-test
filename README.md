@@ -12,7 +12,6 @@ There are two ways of reviewing the project.
 - [Download](https://github.com/scandiweb/junior-react-endpoint) and launch the graphQL endpoint.
 - Make sure that the localhost link is `http://localhost:4000/`.
 - You are ready to go.
-- 
 #### 2) download
 
 - Download or clone the project from github.
