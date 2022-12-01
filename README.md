@@ -4,13 +4,13 @@
 ## Installation
 
 There are two ways of reviewing the project. 
-1) Look throught [gh-pages](https://myroslavsuprun.github.io/react-developer-test/).
+1) Look through [gh-pages](https://myroslavsuprun.github.io/react-developer-test/).
 2) Download and launch on your localhost.
 
 #### 1) gh-pages
 
 - [Download](https://github.com/scandiweb/junior-react-endpoint) and launch the graphQL endpoint.
-- Make sure that the localhost link is `http://localhost:4000/`.
+- Make sure that the endpoint link is `http://localhost:4000/`.
 - You are ready to go.
 #### 2) download
 
@@ -18,7 +18,7 @@ There are two ways of reviewing the project.
 - Install the dependencies.
 - Launch on your localhost.
 - [Download](https://github.com/scandiweb/junior-react-endpoint) and launch the graphQL endpoint.
-- Make sure that the localhost link is `http://localhost:4000/`.
+- Make sure that the endpoint link is `http://localhost:4000/`.
 - You are ready to go.
 
 ## Review part
