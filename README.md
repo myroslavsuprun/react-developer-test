@@ -27,28 +27,28 @@ There are two ways of reviewing the project.
 * react
 * react router dom
 * graphql
-* RTK --- working with the global state: currency; cart products;
-* RTK Query --- fetching data from the graphQL endpoint
-* redux-persist --- saving data in local storage
+* RTK — working with the global state: currency; cart products;
+* RTK Query — fetching data from the graphQL endpoint
+* redux-persist — saving data in local storage
 * styled-components
 
 
 ##### __Main features:__ 
 * PLP:
--- Adding and removing cart products with default options;
--- Opening PDP page;
+  - Adding and removing cart products with default options;
+  - Opening PDP page;
 * Header: 
--- Switching between product categories which are rendered from the BE; 
--- Switching currency which will be saved in local storage and set on every page;
--- Opening cart overlay with possibility to correct product quantity, to go to Cart page and remove all products from cart;
+  - Switching between product categories which are rendered from the BE; 
+  - Switching currency which will be saved in local storage and set on every page;
+  - Opening cart overlay with possibility to correct product quantity, to go to Cart page and remove all products from cart;
 * PDP:
--- Switching product images;
--- Choosing specific product attribute;
--- Adding/removing product from cart with specific attribute;
+  - Switching product images;
+  - Choosing specific product attribute;
+  - Adding/removing product from cart with specific attribute;
 * Cart page:
--- Changing products quantity;
--- Switching product between images;
--- Removing all products by pressing order button;
+  - Changing products quantity;
+  - Switching product between images;
+  - Removing all products by pressing order button;
 ##### __Lighthouse test:__
 ![lighthouse test image](https://i.imgur.com/3QhsA5Y.png)
 
