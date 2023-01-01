@@ -66,9 +66,12 @@ class CartProduct extends PureComponent {
     const { product } = this.props;
     const { gallery } = product;
 
-    const galleryLength = gallery.length;
+    // If this is the last image index, then we should go to the beginning of the array
+    if (activeImageIndex === gallery.length - 1) {
+      this.setState({
+        activeImageIndex: 0,
+      });
 
-    if (activeImageIndex === galleryLength - 1) {
       return;
     }
 
@@ -80,7 +83,15 @@ class CartProduct extends PureComponent {
   handlePreviousImageBtn = () => {
     const { activeImageIndex } = this.state;
 
+    // If this is the first image index, then we should go to the last image in the array
     if (activeImageIndex === 0) {
+      const { product } = this.props;
+      const { gallery } = product;
+
+      this.setState({
+        activeImageIndex: gallery.length - 1,
+      });
+
       return;
     }
 
