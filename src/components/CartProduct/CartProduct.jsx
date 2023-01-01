@@ -112,8 +112,6 @@ class CartProduct extends PureComponent {
       currency: { symbol },
     } = activeCurrency;
 
-    console.log(activeImageIndex);
-
     const ifImgBtnsShown =
       cartTypeProp === cartType.page && gallery.length >= 2;
 
