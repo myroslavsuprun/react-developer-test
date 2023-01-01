@@ -34,6 +34,7 @@ import {
 // constants
 import ROUTES from 'constants/routes';
 import cartType from 'constants/cartType';
+import { numberWithDividers, toFixedNumber } from 'js';
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -81,6 +82,10 @@ class CartOverlay extends Component {
     const { products, activeCartTotal } = this.props;
     const { totalQuantity, currency, totalAmount } = activeCartTotal;
 
+    const fixedTotalAmountWithDividers = numberWithDividers(
+      toFixedNumber(totalAmount)
+    );
+
     const ifCartEmpty = !Boolean(totalQuantity);
 
     const component = (
@@ -109,7 +114,7 @@ class CartOverlay extends Component {
                 <TotalCountP fw={500}>Total</TotalCountP>
                 <TotalCountP as="span" fw={700}>
                   {currency.symbol}
-                  {totalAmount.toFixed(2)}
+                  {fixedTotalAmountWithDividers}
                 </TotalCountP>
               </>
             )}
