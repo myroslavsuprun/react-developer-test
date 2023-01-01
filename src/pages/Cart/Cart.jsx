@@ -29,6 +29,7 @@ import {
 // constants
 import cartType from 'constants/cartType';
 import { taxRate } from 'constants/taxRate';
+import { numberWithDividers, toFixedNumber } from 'js';
 
 class CartPage extends PureComponent {
   handleOrderClick = () => {
@@ -45,6 +46,11 @@ class CartPage extends PureComponent {
       taxPay,
       totalQuantity = 0,
     } = activeCartTotal;
+
+    const fixedTaxPayWithDividers = numberWithDividers(toFixedNumber(taxPay));
+    const fixedTotalAmountWithDividers = numberWithDividers(
+      toFixedNumber(totalAmount)
+    );
 
     const ifCartEmpty = !Boolean(totalQuantity);
 
@@ -75,12 +81,12 @@ class CartPage extends PureComponent {
               <TotalCountItem>
                 <TotalCountSpan>
                   {currency.symbol}
-                  {taxPay.toFixed(2)}
+                  {fixedTaxPayWithDividers}
                 </TotalCountSpan>
                 <TotalCountSpan>{totalQuantity}</TotalCountSpan>
                 <TotalCountSpan>
                   {currency.symbol}
-                  {totalAmount.toFixed(2)}
+                  {fixedTotalAmountWithDividers}
                 </TotalCountSpan>
               </TotalCountItem>
             </>

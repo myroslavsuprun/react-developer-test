@@ -28,6 +28,7 @@ import {
   createDefaultOptionValues,
   createUniqueIdWithOptionValues,
   memoizeIfInCardValue,
+  toFixedNumber,
 } from 'js';
 
 class ProductDescription extends PureComponent {
@@ -117,6 +118,8 @@ class ProductDescription extends PureComponent {
       currency: { symbol },
     } = activeCurrency;
 
+    const fixedAmountWithDividers = numberWithDividers(toFixedNumber(amount));
+
     const btnTextIfInStock = ifProductInCart
       ? 'Remove from cart'
       : 'Add to cart';
@@ -135,7 +138,7 @@ class ProductDescription extends PureComponent {
         <ProductPriceTitle>Price:</ProductPriceTitle>
         <ProductPrice>
           {symbol}
-          {numberWithDividers(amount)}
+          {fixedAmountWithDividers}
         </ProductPrice>
         <BtnAddition
           type="button"

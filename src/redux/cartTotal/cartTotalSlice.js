@@ -3,8 +3,6 @@ import { addCartProduct, removeCartProducts } from 'redux/cart/cartSlice';
 
 import { taxRate } from 'constants/taxRate';
 
-import { toFixedNumber } from 'js';
-
 const initialState = {
   cartTotal: {
     totalQuantity: 0,
@@ -27,8 +25,8 @@ const countTotalPrices = (statePrices, payloadPrices, isIncrement = true) => {
 
     return {
       currency,
-      totalAmount: toFixedNumber(totalAmount),
-      taxPay: toFixedNumber(taxPay),
+      totalAmount,
+      taxPay,
     };
   });
 };
@@ -75,8 +73,8 @@ export const cartTotalSlice = createSlice({
 
           return {
             currency,
-            totalAmount: toFixedNumber(totalAmount),
-            taxPay: toFixedNumber(taxPay),
+            totalAmount: totalAmount,
+            taxPay: taxPay,
           };
         });
       } else {

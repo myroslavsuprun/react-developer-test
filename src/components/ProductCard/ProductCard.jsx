@@ -25,7 +25,11 @@ import {
 
 // other
 import sprite from 'img/sprite.svg';
-import { createUniqueIdWithOptionValues, numberWithDividers } from 'js';
+import {
+  createUniqueIdWithOptionValues,
+  numberWithDividers,
+  toFixedNumber,
+} from 'js';
 
 class ProductCard extends PureComponent {
   handleAddBtnClick = e => {
@@ -75,6 +79,8 @@ class ProductCard extends PureComponent {
       currency: { symbol },
     } = activeCurrency;
 
+    const fixedAmountWithDividers = numberWithDividers(toFixedNumber(amount));
+
     return (
       <ProductItem inStock={inStock}>
         <ProductLink to={`/${category}/${id}`}>
@@ -101,7 +107,7 @@ class ProductCard extends PureComponent {
           </ProductName>
           <ProductPrice>
             {symbol}
-            {numberWithDividers(amount)}
+            {fixedAmountWithDividers}
           </ProductPrice>
         </ProductLink>
       </ProductItem>

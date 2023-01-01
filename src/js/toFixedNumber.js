@@ -1,3 +1,3 @@
 export const toFixedNumber = (number, roundTo = 2) => {
-  return Number(number?.toFixed(roundTo));
+  return parseFloat(number).toFixed(roundTo);
 };
